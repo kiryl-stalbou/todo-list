@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../theme.dart';
@@ -7,6 +8,8 @@ import '../../../constants/sizes.dart';
 import '../../../utils/mixins/theme_state_mixin.dart';
 import '../../_widgets/animated/animated_translation.dart';
 import '../../_widgets/common/paddings.dart';
+import '../../_widgets/common/spacers.dart';
+import '../../_widgets/scaffolds/app_scaffold.dart';
 
 class ScopeInitActiveScreen extends StatefulWidget {
   const ScopeInitActiveScreen({super.key});
@@ -29,18 +32,22 @@ class _ScopeInitActiveScreenState extends State<ScopeInitActiveScreen> with Them
   }
 
   @override
-  Widget build(BuildContext context) => ColoredBox(
+  Widget build(BuildContext context) => AppScaffold(
         color: colorScheme.primary,
-        child: const Stack(
-          clipBehavior: Clip.none,
-          fit: StackFit.expand,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //
-            Center(child: _AppLogo()),
+            const Icon(
+              CupertinoIcons.calendar_badge_plus,
+              size: kIsWeb ? 80 : 40,
+            ),
 
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: _AppName(),
+            const VSpacer(Insets.l),
+
+            Text(
+              'Todo App for Krainet',
+              style: textTheme.displayMedium,
             ),
           ],
         ),
