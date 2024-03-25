@@ -2,7 +2,9 @@
 
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'src/constants/curves.dart';
 import 'src/constants/durations.dart';
@@ -52,6 +54,13 @@ class _WidgetsApp extends StatelessWidget {
   final StreamController<void> uncaughtErrorsController;
   final bool debugShowWidgetsInspector;
 
+  KeyEventResult _onKeyEvent(FocusNode node, KeyEvent event) {
+    if ((event is! KeyDownEvent && event is! KeyRepeatEvent) || event.logicalKey != LogicalKeyboardKey.escape) {
+      return KeyEventResult.ignored;
+    }
+    return Tooltip.dismissAllToolTips() ? KeyEventResult.handled : KeyEventResult.ignored;
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget child = this.child;
@@ -72,13 +81,29 @@ class _WidgetsApp extends StatelessWidget {
     return MediaQuery.withNoTextScaling(
       child: ScrollConfiguration(
         behavior: const MaterialScrollBehavior(),
-        child: TapRegionSurface(
-          child: TodoLocalizatios(
-            child: TodoTheme(
-              child: UncaughtErrors(
-                controller: uncaughtErrorsController,
-                child: GlobalLoading(
-                  child: child,
+        child: Focus(
+          canRequestFocus: false,
+          onKeyEvent: _onKeyEvent,
+          child: Shortcuts(
+            debugLabel: '<Default WidgetsApp Shortcuts>',
+            shortcuts: WidgetsApp.defaultShortcuts,
+            child: DefaultTextEditingShortcuts(
+              child: Actions(
+                actions: <Type, Action<Intent>>{
+                  ...WidgetsApp.defaultActions,
+                  ScrollIntent: Action<ScrollIntent>.overridable(context: context, defaultAction: ScrollAction()),
+                },
+                child: TapRegionSurface(
+                  child: TodoLocalizatios(
+                    child: TodoTheme(
+                      child: UncaughtErrors(
+                        controller: uncaughtErrorsController,
+                        child: GlobalLoading(
+                          child: child,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
