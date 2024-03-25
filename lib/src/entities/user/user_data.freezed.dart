@@ -21,9 +21,11 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UserData {
   @JsonKey()
-  String get id => throw _privateConstructorUsedError;
-  @JsonKey()
   String get username => throw _privateConstructorUsedError;
+  @JsonKey()
+  String get email => throw _privateConstructorUsedError;
+  @JsonKey()
+  String get id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 }
@@ -32,7 +34,9 @@ mixin _$UserData {
 @JsonSerializable()
 class _$UserDataImpl extends _UserData {
   const _$UserDataImpl(
-      {@JsonKey() required this.id, @JsonKey() required this.username})
+      {@JsonKey() required this.username,
+      @JsonKey() required this.email,
+      @JsonKey() required this.id})
       : super._();
 
   factory _$UserDataImpl.fromJson(Map<String, dynamic> json) =>
@@ -40,14 +44,17 @@ class _$UserDataImpl extends _UserData {
 
   @override
   @JsonKey()
-  final String id;
+  final String username;
   @override
   @JsonKey()
-  final String username;
+  final String email;
+  @override
+  @JsonKey()
+  final String id;
 
   @override
   String toString() {
-    return 'UserData(id: $id, username: $username)';
+    return 'UserData(username: $username, email: $email, id: $id)';
   }
 
   @override
@@ -55,14 +62,15 @@ class _$UserDataImpl extends _UserData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserDataImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.username, username) ||
-                other.username == username));
+                other.username == username) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.id, id) || other.id == id));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, username);
+  int get hashCode => Object.hash(runtimeType, username, email, id);
 
   @override
   Map<String, dynamic> toJson() {
@@ -74,8 +82,9 @@ class _$UserDataImpl extends _UserData {
 
 abstract class _UserData extends UserData {
   const factory _UserData(
-      {@JsonKey() required final String id,
-      @JsonKey() required final String username}) = _$UserDataImpl;
+      {@JsonKey() required final String username,
+      @JsonKey() required final String email,
+      @JsonKey() required final String id}) = _$UserDataImpl;
   const _UserData._() : super._();
 
   factory _UserData.fromJson(Map<String, dynamic> json) =
@@ -83,8 +92,11 @@ abstract class _UserData extends UserData {
 
   @override
   @JsonKey()
-  String get id;
+  String get username;
   @override
   @JsonKey()
-  String get username;
+  String get email;
+  @override
+  @JsonKey()
+  String get id;
 }

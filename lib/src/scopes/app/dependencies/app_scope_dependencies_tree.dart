@@ -6,5 +6,5 @@ class AppScopeDependenciesTree extends StatelessWidget {
   final Widget child;
 
   @override
-  Widget build(BuildContext context) => const SizedBox();
+  Widget build(BuildContext context) => child;
 }

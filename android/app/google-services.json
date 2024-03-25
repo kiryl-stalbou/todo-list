@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "720112025543",
+    "project_id": "todo-app-krainet",
+    "storage_bucket": "todo-app-krainet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720112025543:android:ee1f2f2db04de79016a3e2",
+        "android_client_info": {
+          "package_name": "com.example.todo_app_krainet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3tkwSt49hh4QDVsMxoiMAZ09jtLTBs6A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
