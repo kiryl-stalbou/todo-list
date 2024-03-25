@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants/curves.dart';
-import '../../../constants/durations.dart';
 import '_animated_state.dart';
 
 class AnimatedTranslation extends StatefulWidget {
@@ -9,8 +8,8 @@ class AnimatedTranslation extends StatefulWidget {
     required this.from,
     required this.to,
     required this.child,
+    required this.duration,
     this.animateOnMount = false,
-    this.duration = AppDurations.fastSlide,
     super.key,
   }) : fractional = false;
 
@@ -18,8 +17,8 @@ class AnimatedTranslation extends StatefulWidget {
     required this.from,
     required this.to,
     required this.child,
+    required this.duration,
     this.animateOnMount = false,
-    this.duration = AppDurations.fastSlide,
     super.key,
   }) : fractional = true;
 

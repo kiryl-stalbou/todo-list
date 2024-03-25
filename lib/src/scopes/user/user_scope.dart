@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../entities/user/user_data.dart';
+import '../../ui/_init/init.dart';
 import 'dependencies/user_scope_dependencies.dart';
 import 'dependencies/user_scope_dependencies_impl.dart';
 import 'dependencies/user_scope_dependencies_tree.dart';
@@ -43,6 +44,8 @@ class _UserScopeState extends State<UserScope> {
   void initState() {
     super.initState();
     _resolveDependenciesInitializer();
+    
+    Init.of(context).onScopeInitReload = () => setState(_resolveDependenciesInitializer);
   }
 
   @override

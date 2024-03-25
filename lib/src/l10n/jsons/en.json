@@ -1,4 +1,7 @@
 {
+    "email": "Email",
+    "tryAgain": "Try again",
+    "proceed": "Continue",
     "ok": "OK",
     "cancel": "Cancel",
     "delete": "Delete",
@@ -7,5 +10,7 @@
     "errorReleaseTitle": "App has crashed!",
     "errorReleaseBody": "Sorry, we have missed this error. We hope that you won't see this screen again. To continue, please close the app and open it again.",
     "errorUnknown": "Unknown error",
-    "errorUnexpectedTitle": "Something unexpected happened 🙃"
+    "errorUnexpectedTitle": "Something unexpected happened 🙃",
+    "scopeInitErrorTitle": "No Internet Connection",
+    "scopeInitErrorSubtitle": "It's looks like your phone is not connected to the internet. To connect, turn off Airplane Mode or connect to a Wi-Fi network."
 }

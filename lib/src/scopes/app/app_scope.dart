@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../ui/_init/init.dart';
 import 'app_scope_status.dart';
 import 'dependencies/app_scope_dependencies.dart';
 import 'dependencies/app_scope_dependencies_impl.dart';
@@ -42,6 +43,8 @@ class _AppScopeState extends State<AppScope> {
   void initState() {
     super.initState();
     _resolveDependenciesInitializer();
+
+    Init.of(context).onScopeInitReload = () => setState(_resolveDependenciesInitializer);
   }
 
   @override

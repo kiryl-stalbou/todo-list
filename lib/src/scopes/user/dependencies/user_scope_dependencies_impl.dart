@@ -5,6 +5,7 @@ import '../../../entities/user/user_data.dart';
 import '../../../exceptions/impl/_app_exception.dart';
 import '../../../logs/logger.dart';
 
+import '../../../ui/_init/init.dart';
 import '../../../utils/common/initialization_time.dart';
 import '../user_scope_status.dart';
 import 'user_scope_dependencies.dart';
@@ -16,6 +17,8 @@ final class UserScopeDependenciesImpl implements UserScopeDependencies {
 
   static Stream<UserScopeStatus> initializer(BuildContext context, UserData user) async* {
     final l = _l.copyWith(method: 'initializer', params: 'user: $user');
+
+    final initState = Init.of(context)..showScopeInitFailedScreen = false;
 
     final watch = Stopwatch()..start();
 
@@ -35,6 +38,8 @@ final class UserScopeDependenciesImpl implements UserScopeDependencies {
       l.v('Initialization Completed');
     } on AppException catch (e, s) {
       l.error(e, s, reason: 'Initialization Failed');
+
+      initState.showScopeInitFailedScreen = true;
 
       await stopInitWatch(AppDurations.minUserScopeInitDelay, watch, l);
     }

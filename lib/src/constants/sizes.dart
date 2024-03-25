@@ -49,7 +49,6 @@ abstract final class IconSize {
   static const double xs = 16;
 }
 
-
 abstract final class Indicators {
   /// 40
   static const double xl = 40;
@@ -75,13 +74,12 @@ abstract final class Strokes {
   static const double thin = 0.4;
 }
 
-
 abstract final class Buttons {
   /// 52
   static const double lHeight = 52;
 
-  /// double.infinity
-  static const double lWidth = double.infinity;
+  /// 200
+  static const double lWidth = 200;
 
   /// 45
   static const double mHeight = 45;

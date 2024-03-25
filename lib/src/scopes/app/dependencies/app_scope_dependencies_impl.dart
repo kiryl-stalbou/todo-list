@@ -4,6 +4,7 @@ import '../../../constants/durations.dart';
 import '../../../exceptions/impl/_app_exception.dart';
 import '../../../logs/logger.dart';
 
+import '../../../ui/_init/init.dart';
 import '../../../utils/common/initialization_time.dart';
 import '../app_scope_status.dart';
 import 'app_scope_dependencies.dart';
@@ -22,6 +23,8 @@ final class AppScopeDependenciesImpl implements AppScopeDependencies {
 
   static Stream<AppScopeStatus> initializer(BuildContext context) async* {
     final l = _l.copyWith(method: 'initializer', params: '');
+
+    final initState = Init.of(context)..showScopeInitFailedScreen = false;
 
     final watch = Stopwatch()..start();
 
@@ -46,6 +49,8 @@ final class AppScopeDependenciesImpl implements AppScopeDependencies {
       l.v('Initialization Completed');
     } on AppException catch (e, s) {
       l.error(e, s, reason: 'Initialization Failed');
+
+      initState.showScopeInitFailedScreen = true;
 
       await stopInitWatch(AppDurations.minAppScopeInitDelay, watch, l);
     }

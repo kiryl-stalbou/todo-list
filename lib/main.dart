@@ -1,10 +1,13 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'app.dart';
 
+import 'firebase_options.dart';
 import 'src/logs/logger.dart';
 import 'src/logs/widgets_binding_logger.dart';
 
@@ -12,6 +15,8 @@ import 'src/logs/widgets_binding_logger.dart';
 
 void main() async {
   await _initFlutter();
+
+  await _initFirebase();
 
   runApp(TodoApp(uncaughtErrorsController: _initUncaughtErrorsController()));
 }
@@ -25,6 +30,12 @@ Future<void> _initFlutter() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+}
+
+Future<void> _initFirebase() async {
+  await Firebase.initializeApp(name: 'todo-app-krainet', options: DefaultFirebaseOptions.currentPlatform);
+
+  await FirebaseAuth.instance.setLanguageCode(null);
 }
 
 StreamController<void> _initUncaughtErrorsController() {
