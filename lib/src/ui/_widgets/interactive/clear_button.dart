@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'app_icon_button.dart';
+
 class ClearButton extends StatefulWidget {
   const ClearButton({
     required this.controller,
@@ -46,9 +48,9 @@ class _ClearButtonState extends State<ClearButton> {
 
   @override
   Widget build(BuildContext context) => _showButton
-      ? IconButton(
+      ? AppIconButton(
           icon: Icon(widget.icon),
-          onPressed: _onClearTap,
+          onTap: _onClearTap,
         )
       : const SizedBox.shrink();
 }

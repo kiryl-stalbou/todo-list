@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../logs/logger.dart';
+import '../../ui/todo/todo_screen.dart';
+import '../_pages/no_transition_page.dart';
 import 'todo_configuration.dart';
 
 class TodoRouterDelegate extends RouterDelegate<TodoConfiguration> with ChangeNotifier {
@@ -12,13 +14,14 @@ class TodoRouterDelegate extends RouterDelegate<TodoConfiguration> with ChangeNo
 
   @override
   Widget build(BuildContext context) => Navigator(
-      key: _navigatorKey,
-      onPopPage: _handleNavigatorPop,
-      clipBehavior: Clip.none,
-      pages: const <Page<void>>[
-        //
-      ],
-    );
+        key: _navigatorKey,
+        onPopPage: _handleNavigatorPop,
+        clipBehavior: Clip.none,
+        pages: <Page<void>>[
+          //
+          asNoTransitionPage(const TodoScreen(), 'TodoScreen'),
+        ],
+      );
 
   bool _handleNavigatorPop(Route<void> route, void result) {
     if (route.didPop(result)) return _tryPopRoute();

@@ -13,6 +13,12 @@ class AuthServiceImpl implements AuthService {
   static const _l = Logger(library: 'AuthServiceImpl');
 
   @override
+  bool showSignInScreen = false;
+
+  @override
+  bool showSignUpScreen = false;
+
+  @override
   ValueStream<UserData?> get authStateChanges => _repository.authStateChanges;
 
   @override

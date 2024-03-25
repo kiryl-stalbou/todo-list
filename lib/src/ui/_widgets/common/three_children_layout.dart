@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import '../../../constants/sizes.dart';
 
-
 class ThreeChildrenLayout extends StatelessWidget {
   const ThreeChildrenLayout({
     this.middleSpacing,
@@ -64,7 +63,7 @@ class _ThreeChildrenLayoutDelegate extends MultiChildLayoutDelegate {
 
     if (hasChild(_Slot.trailing)) {
       final trailingMaxWidth = math.max(size.width - leadingWidth, 0.0);
-      final trailingSize = layoutChild(_Slot.middle, looseConstraints.copyWith(maxWidth: trailingMaxWidth));
+      final trailingSize = layoutChild(_Slot.trailing, looseConstraints.copyWith(maxWidth: trailingMaxWidth));
       trailingWidth = trailingSize.width;
       final trailingX = size.width - trailingSize.width;
       final trailingY = _center(size.height, trailingSize.height);

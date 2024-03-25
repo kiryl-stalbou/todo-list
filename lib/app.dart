@@ -162,10 +162,13 @@ class _TodoLocalizationsState extends State<TodoLocalizations> with WidgetsBindi
   }
 
   @override
-  Widget build(BuildContext context) => Localizations(
-        locale: _locale,
-        delegates: S.localizationsDelegates,
-        child: widget.child,
+  Widget build(BuildContext context) => _TodoLocalizationsInheritedWidget(
+        state: this,
+        child: Localizations(
+          locale: _locale,
+          delegates: S.localizationsDelegates,
+          child: widget.child,
+        ),
       );
 }
 

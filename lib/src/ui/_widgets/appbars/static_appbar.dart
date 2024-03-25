@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 import '../../../../app.dart';
 import '../../../constants/colors.dart';
 import '../../../constants/sizes.dart';
 import '../common/spacers.dart';
 import '../common/three_children_layout.dart';
+import '../interactive/app_icon_button.dart';
 
 class StaticAppBar extends StatelessWidget {
   const StaticAppBar({
@@ -44,10 +46,10 @@ class StaticAppBar extends StatelessWidget {
             middle: title,
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                IconButton(onPressed: () => TodoLocalizations.toggle(context), icon: const Icon(Icons.language)),
-                const HSpacer(Insets.s),
-                IconButton(onPressed: () => TodoTheme.toggle(context), icon: const Icon(CupertinoIcons.moon_circle)),
+                AppIconButton(onTap: () => TodoLocalizations.toggle(context), icon: const Icon(Icons.language)),
+                AppIconButton(onTap: () => TodoTheme.toggle(context), icon: const Icon(CupertinoIcons.moon_circle)),
               ],
             ),
           ),
