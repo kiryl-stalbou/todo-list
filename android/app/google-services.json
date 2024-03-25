@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:720112025543:android:ee1f2f2db04de79016a3e2",
+        "mobilesdk_app_id": "1:720112025543:android:a3ef10dd7a8338f716a3e2",
         "android_client_info": {
-          "package_name": "com.example.todo_app_krainet"
+          "package_name": "com.krainet.todo"
         }
       },
       "oauth_client": [],

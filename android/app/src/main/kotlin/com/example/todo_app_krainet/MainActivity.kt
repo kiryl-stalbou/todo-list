@@ -1,4 +1,4 @@
-package com.example.todo_app_krainet
+package com.krainet.todo
 
 import io.flutter.embedding.android.FlutterActivity
 
