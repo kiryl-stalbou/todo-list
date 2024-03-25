@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants/sizes.dart';
+import '../../_widgets/common/paddings.dart';
 import '../../_widgets/common/spacers.dart';
+import '../../_widgets/scaffolds/app_scaffold.dart';
 
 class DebugErrorScreen extends StatelessWidget {
   const DebugErrorScreen(this.errors, {super.key});
@@ -15,13 +17,12 @@ class DebugErrorScreen extends StatelessWidget {
 
     final style = textTheme.labelSmall?.copyWith(color: colorScheme.onError);
 
-    return Scaffold(
-      body: SafeArea(
-        bottom: false,
+    return AppScaffold(
+      color: colorScheme.error,
+      body: AppPadding(
         child: ListView.separated(
-          padding: const EdgeInsets.symmetric(horizontal: Insets.l),
           itemCount: errors.length,
-          separatorBuilder: (_, index) => Divider(color: colorScheme.onError, height: Insets.m),
+          separatorBuilder: (_, index) => Divider(color: colorScheme.onError, height: Insets.xxl),
           itemBuilder: (_, index) => Column(
             children: [
               //

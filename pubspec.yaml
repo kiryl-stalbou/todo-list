@@ -30,10 +30,7 @@ dev_dependencies:
   freezed: ^2.4.7
   json_serializable: ^6.7.1
   build_runner: ^2.0.0
-  flutter_native_splash: 
-    git:
-      url: https://github.com/jonbhanson/flutter_native_splash
-      ref: 78c3a70
+  flutter_native_splash: ^2.4.0
 
 flutter_native_splash:
   color: "#4e8f2c"

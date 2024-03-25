@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.4.1"
+  ansicolor:
+    dependency: transitive
+    description:
+      name: ansicolor
+      sha256: "8bf17a8ff6ea17499e40a2d2542c2f481cd7615760c6d34065cb22bfd22e6880"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   archive:
     dependency: transitive
     description:
@@ -302,12 +310,11 @@ packages:
   flutter_native_splash:
     dependency: "direct dev"
     description:
-      path: "."
-      ref: "78c3a70"
-      resolved-ref: "78c3a7043a917cef286c6c8ddc8e5fe71a4dcc60"
-      url: "https://github.com/jonbhanson/flutter_native_splash"
-    source: git
-    version: "2.3.1"
+      name: flutter_native_splash
+      sha256: edf39bcf4d74aca1eb2c1e43c3e445fd9f494013df7f0da752fefe72020eedc0
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter

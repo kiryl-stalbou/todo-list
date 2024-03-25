@@ -33,7 +33,7 @@ Future<void> _initFlutter() async {
 }
 
 Future<void> _initFirebase() async {
-  await Firebase.initializeApp(name: 'todo-app-krainet', options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   await FirebaseAuth.instance.setLanguageCode(null);
 }

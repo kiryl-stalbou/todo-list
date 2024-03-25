@@ -96,7 +96,7 @@ class _WidgetsApp extends StatelessWidget {
                   ScrollIntent: Action<ScrollIntent>.overridable(context: context, defaultAction: ScrollAction()),
                 },
                 child: TapRegionSurface(
-                  child: TodoLocalizatios(
+                  child: TodoLocalizations(
                     child: TodoTheme(
                       child: UncaughtErrors(
                         controller: uncaughtErrorsController,
@@ -116,8 +116,8 @@ class _WidgetsApp extends StatelessWidget {
   }
 }
 
-class TodoLocalizatios extends StatefulWidget {
-  const TodoLocalizatios({required this.child, super.key});
+class TodoLocalizations extends StatefulWidget {
+  const TodoLocalizations({required this.child, super.key});
 
   final Widget child;
 
@@ -130,10 +130,10 @@ class TodoLocalizatios extends StatefulWidget {
   }
 
   @override
-  State<TodoLocalizatios> createState() => _TodoLocalizationsState();
+  State<TodoLocalizations> createState() => _TodoLocalizationsState();
 }
 
-class _TodoLocalizationsState extends State<TodoLocalizatios> with WidgetsBindingObserver {
+class _TodoLocalizationsState extends State<TodoLocalizations> with WidgetsBindingObserver {
   late Locale _locale;
 
   void toggleLocale() {
