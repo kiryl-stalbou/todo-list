@@ -1,0 +1,11 @@
+{
+    "ok": "OK",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "require": "Required",
+    "search": "Search",
+    "errorReleaseTitle": "App has crashed!",
+    "errorReleaseBody": "Sorry, we have missed this error. We hope that you won't see this screen again. To continue, please close the app and open it again.",
+    "errorUnknown": "Unknown error",
+    "errorUnexpectedTitle": "Something unexpected happened 🙃"
+}
