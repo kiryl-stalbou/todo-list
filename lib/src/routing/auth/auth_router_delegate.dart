@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../logs/logger.dart';
-import '../../ui/_init/states/scope_init_active_screen.dart';
+import '../../ui/auth/welcome/welcome_screen.dart';
 import '../_pages/no_transition_page.dart';
 import 'auth_configuration.dart';
 
@@ -19,7 +19,7 @@ class AuthRouterDelegate extends RouterDelegate<AuthConfiguration> with ChangeNo
         clipBehavior: Clip.none,
         pages: <Page<void>>[
           //
-          asNoTransitionPage(const ScopeInitActiveScreen(), 'AppScopeInitScreen'),
+          asNoTransitionPage(const WelcomeScreen(), 'AppScopeInitScreen'),
         ],
       );
 

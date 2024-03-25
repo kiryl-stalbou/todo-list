@@ -19,11 +19,14 @@ class BottomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget child = AppSafePadding(
-      child: AppButton(
-        onTap: onTap,
-        listenLocalLoading: listenLocalLoading,
-        child: this.child,
+    Widget child = Center(
+      heightFactor: 1,
+      child: AppSafePadding(
+        child: AppButton(
+          onTap: onTap,
+          listenLocalLoading: listenLocalLoading,
+          child: this.child,
+        ),
       ),
     );
 

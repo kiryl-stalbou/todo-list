@@ -24,12 +24,12 @@ class AppButton extends StatefulWidget {
 
   final Widget child;
   final double height;
+  final double width;
   final bool listenLocalLoading;
   final Color disabledColor;
   final BorderSide borderSide;
   final BorderRadius borderRadius;
   final Color? color;
-  final double? width;
   final Color? splashColor;
   final VoidCallback? onTap;
   final EdgeInsetsGeometry? margin;

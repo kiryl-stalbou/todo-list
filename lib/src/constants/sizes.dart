@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 abstract final class Insets {
@@ -79,7 +80,7 @@ abstract final class Buttons {
   static const double lHeight = 52;
 
   /// 200
-  static const double lWidth = 200;
+  static const double lWidth = kIsWeb ? 500 : double.infinity;
 
   /// 45
   static const double mHeight = 45;

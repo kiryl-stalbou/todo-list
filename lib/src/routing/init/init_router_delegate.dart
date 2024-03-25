@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../ui/_init/init.dart';
-import '../../ui/_init/states/scope_init_failed_screen.dart';
 import '../../ui/_init/states/scope_init_active_screen.dart';
+import '../../ui/_init/states/scope_init_failed_screen.dart';
 import '../_pages/no_transition_page.dart';
 
 class InitRouterDelegate extends RouterDelegate<void> with ChangeNotifier {

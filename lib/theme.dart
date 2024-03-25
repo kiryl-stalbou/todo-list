@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,7 +10,8 @@ import 'src/constants/fonts.dart';
 import 'src/constants/sizes.dart';
 
 void resolveSystemUiOverlayStyle(ThemeData theme, [Color? color]) {
-  
+  if (kIsWeb) return;
+
   final resolvedColor = color ?? theme.colorScheme.surface;
   final oppositeBrightness = theme.brightness == Brightness.light ? Brightness.dark : Brightness.light;
   final resolvedBrightness = Platform.isIOS ? theme.brightness : oppositeBrightness;

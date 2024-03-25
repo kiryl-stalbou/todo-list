@@ -21,6 +21,7 @@ dependencies:
   rxdart: ^0.27.7
   firebase_auth: ^4.17.9
   firebase_core: ^2.27.1
+  flutter_native_splash: ^2.4.0
   
   
 dev_dependencies:
@@ -30,7 +31,6 @@ dev_dependencies:
   freezed: ^2.4.7
   json_serializable: ^6.7.1
   build_runner: ^2.0.0
-  flutter_native_splash: ^2.4.0
 
 flutter_native_splash:
   color: "#4e8f2c"
