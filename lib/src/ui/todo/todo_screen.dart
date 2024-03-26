@@ -10,7 +10,7 @@ class TodoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Center(
         child: TapDetector(
-          onTap: () => Auth.of(context).signOut(),
+          onTap: () async => Auth.of(context).signOut(),
           child: Text('${User.of(context).user}'),
         ),
       );

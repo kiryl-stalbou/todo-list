@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../logs/logger.dart';
 import '../../scopes/app/dependencies/auth/auth.dart';
+import '../../ui/_init/scope_init_active_screen.dart';
+import '../../ui/_init/scope_init_failed_screen.dart';
 import '../../ui/auth/signin/signin_screen.dart';
 import '../../ui/auth/signup/signup_screen.dart';
 import '../_pages/material_page.dart';

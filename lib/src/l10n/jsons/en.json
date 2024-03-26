@@ -22,7 +22,7 @@
     "signinDontHaveAcc": "Don't have an account? Sign Up",
     "signupHaveAcc": "Already have an account? Sign In",
     "scopeInitErrorTitle": "No Internet Connection",
-    "scopeInitErrorSubtitle": "It's looks like your phone is not connected to the internet. To connect, turn off Airplane Mode or connect to a Wi-Fi network.",
+    "scopeInitErrorSubtitle": "It's looks like your are not connected to the internet. To connect, turn off Airplane Mode or connect to a Wi-Fi network.",
     "errorInvalidEmail": "Invalid email",
     "errorReleaseTitle": "App has crashed!",
     "errorReleaseBody": "Sorry, we have missed this error. We hope that you won't see this screen again. To continue, please close the app and open it again.",

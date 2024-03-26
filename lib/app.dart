@@ -9,7 +9,6 @@ import 'src/constants/curves.dart';
 import 'src/constants/durations.dart';
 import 'src/l10n/s.dart';
 import 'src/routing/auth/auth_router.dart';
-import 'src/routing/init/init_router.dart';
 import 'src/routing/todo/todo_router.dart';
 import 'src/scopes/app/app_scope.dart';
 import 'src/scopes/app/dependencies/auth/auth.dart';
