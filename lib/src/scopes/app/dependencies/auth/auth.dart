@@ -32,9 +32,6 @@ class Auth extends StatefulWidget {
 class AuthState extends State<Auth> {
   late final AuthService _service = AppScope.dependenciesOf(context).authService;
 
-  bool get showSignInScreen => _service.showSignInScreen;
-  set showSignInScreen(bool value) => setState(() => _service.showSignInScreen = value);
-
   bool get showSignUpScreen => _service.showSignUpScreen;
   set showSignUpScreen(bool value) => setState(() => _service.showSignUpScreen = value);
 
@@ -53,7 +50,6 @@ class AuthState extends State<Auth> {
   @override
   Widget build(BuildContext context) => _AuthInheritedWidget(
         state: this,
-        showSignInScreen: showSignInScreen,
         showSignUpScreen: showSignUpScreen,
         child: StreamBuilder<UserData?>(
           initialData: _service.authStateChanges.valueOrNull,
@@ -73,14 +69,12 @@ class _AuthInheritedWidget extends InheritedWidget {
   const _AuthInheritedWidget({
     required super.child,
     required this.state,
-    required this.showSignInScreen,
     required this.showSignUpScreen,
   });
 
   final AuthState state;
-  final bool showSignInScreen;
   final bool showSignUpScreen;
 
   @override
-  bool updateShouldNotify(_AuthInheritedWidget oldWidget) => oldWidget.showSignInScreen != showSignInScreen || oldWidget.showSignUpScreen != showSignUpScreen;
+  bool updateShouldNotify(_AuthInheritedWidget oldWidget) => oldWidget.showSignUpScreen != showSignUpScreen;
 }

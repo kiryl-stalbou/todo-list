@@ -17,4 +17,15 @@ class AuthRouteInformationParser extends RouteInformationParser<AuthConfiguratio
 
     return configuration;
   }
+
+  @override
+  RouteInformation? restoreRouteInformation(AuthConfiguration configuration) {
+    final l = _l.copyWith(method: 'restoreRouteInformation', params: 'configuration: $configuration');
+
+    final routeInformation = RouteInformation(uri: configuration.toUri());
+
+    l.v('Completed with: $routeInformation');
+
+    return routeInformation;
+  }
 }

@@ -1,27 +1,37 @@
 import 'package:flutter/material.dart';
 
 import '../../logs/logger.dart';
-import '../../ui/auth/welcome/welcome_screen.dart';
-import '../_pages/no_transition_page.dart';
+import '../../scopes/app/dependencies/auth/auth.dart';
+import '../../ui/auth/signin/signin_screen.dart';
+import '../../ui/auth/signup/signup_screen.dart';
+import '../_pages/material_page.dart';
 import 'auth_configuration.dart';
 
 class AuthRouterDelegate extends RouterDelegate<AuthConfiguration> with ChangeNotifier {
-  AuthRouterDelegate() : _navigatorKey = GlobalKey();
+  AuthRouterDelegate(this._authState) : _navigatorKey = GlobalKey();
+
+  final AuthState _authState;
 
   final GlobalKey<NavigatorState> _navigatorKey;
 
   static const _l = Logger(library: 'AuthRouterDelegate');
 
   @override
-  Widget build(BuildContext context) => Navigator(
-        key: _navigatorKey,
-        onPopPage: _handleNavigatorPop,
-        clipBehavior: Clip.none,
-        pages: <Page<void>>[
-          //
-          asNoTransitionPage(const WelcomeScreen(), 'AppScopeInitScreen'),
-        ],
-      );
+  Widget build(BuildContext context) {
+    final showSignUpScreen = _authState.showSignUpScreen;
+
+    return Navigator(
+      key: _navigatorKey,
+      onPopPage: _handleNavigatorPop,
+      clipBehavior: Clip.none,
+      pages: <Page<void>>[
+        //
+        asMaterialPage(const SignInScreen(), 'SignInScreen'),
+
+        if (showSignUpScreen) asMaterialPage(const SignUpScreen(), 'SignUpScreen'),
+      ],
+    );
+  }
 
   bool _handleNavigatorPop(Route<void> route, void result) {
     if (route.didPop(result)) return _tryPopRoute();
@@ -38,7 +48,17 @@ class AuthRouterDelegate extends RouterDelegate<AuthConfiguration> with ChangeNo
     return navigator.maybePop();
   }
 
-  bool _tryPopRoute() => false;
+  bool _tryPopRoute() {
+    if (_authState.showSignUpScreen) {
+      _authState.showSignUpScreen = false;
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
+  AuthConfiguration? get currentConfiguration => AuthConfiguration(showSignUp: _authState.showSignUpScreen);
 
   @override
   Future<void> setInitialRoutePath(AuthConfiguration configuration) async {
@@ -52,6 +72,8 @@ class AuthRouterDelegate extends RouterDelegate<AuthConfiguration> with ChangeNo
   @override
   Future<void> setNewRoutePath(AuthConfiguration configuration) async {
     final l = _l.copyWith(method: 'setNewRoutePath', params: 'configuration: $configuration');
+
+    _authState.showSignUpScreen = configuration.showSignUp;
 
     l.v('Completed');
   }

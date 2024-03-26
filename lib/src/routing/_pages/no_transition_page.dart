@@ -9,8 +9,8 @@ Page<void> asNoTransitionPage(Widget w, String name) => NoTransitionPage(
 class NoTransitionPage extends Page<void> {
   const NoTransitionPage({
     required this.child,
-    super.key,
     super.name,
+    super.key,
   });
 
   final Widget child;

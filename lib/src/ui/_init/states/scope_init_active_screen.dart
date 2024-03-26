@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../theme.dart';
@@ -8,8 +7,6 @@ import '../../../constants/sizes.dart';
 import '../../../utils/mixins/theme_state_mixin.dart';
 import '../../_widgets/animated/animated_translation.dart';
 import '../../_widgets/common/paddings.dart';
-import '../../_widgets/common/spacers.dart';
-import '../../_widgets/scaffolds/app_scaffold.dart';
 
 class ScopeInitActiveScreen extends StatefulWidget {
   const ScopeInitActiveScreen({super.key});
@@ -32,22 +29,18 @@ class _ScopeInitActiveScreenState extends State<ScopeInitActiveScreen> with Them
   }
 
   @override
-  Widget build(BuildContext context) => AppScaffold(
+  Widget build(BuildContext context) => ColoredBox(
         color: colorScheme.primary,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: const Stack(
+          clipBehavior: Clip.none,
+          fit: StackFit.expand,
           children: [
             //
-            const Icon(
-              CupertinoIcons.calendar_badge_plus,
-              size: kIsWeb ? 80 : 40,
-            ),
+            Center(child: _AppLogo()),
 
-            const VSpacer(Insets.l),
-
-            Text(
-              'Todo App for Krainet',
-              style: textTheme.displayMedium,
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: _AppName(),
             ),
           ],
         ),
@@ -72,18 +65,12 @@ class _AppName extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return AnimatedTranslation.fractional(
-      animateOnMount: true,
-      duration: AppDurations.splashScreenAnimation,
-      from: const Offset(0, 1),
-      to: Offset.zero,
-      child: AppSafePadding(
-        extraBottom: Insets.m,
-        child: Text(
-          'Todo App Krainet',
-          style: textTheme.headlineLarge?.copyWith(
-            color: colorScheme.onPrimary,
-          ),
+    return AppSafePadding(
+      extraBottom: Insets.m,
+      child: Text(
+        'Todo App Krainet',
+        style: textTheme.headlineLarge?.copyWith(
+          color: colorScheme.onPrimary,
         ),
       ),
     );

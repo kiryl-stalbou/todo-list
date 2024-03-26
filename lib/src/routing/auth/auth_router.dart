@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../scopes/app/dependencies/auth/auth.dart';
 import 'auth_route_information_parser.dart';
 import 'auth_router_delegate.dart';
 
@@ -12,10 +13,12 @@ class AuthRouter extends StatefulWidget {
 }
 
 class _AuthRouterState extends State<AuthRouter> {
-  late final _routerDelegate = AuthRouterDelegate();
+  late final _routerDelegate = AuthRouterDelegate(
+    Auth.of(context, listen: true),
+  );
   late final _routeInformationParser = AuthRouteInformationParser();
   late final _routeInformationProvider = PlatformRouteInformationProvider(
-    initialRouteInformation: RouteInformation(uri: Uri.tryParse('/')),
+    initialRouteInformation: RouteInformation(uri: Uri.parse('/')),
   );
   late final _backButtonDispatcher = RootBackButtonDispatcher();
 
