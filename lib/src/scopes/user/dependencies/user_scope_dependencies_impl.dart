@@ -8,10 +8,14 @@ import '../../../logs/logger.dart';
 import '../../../ui/_init/init.dart';
 import '../../../utils/common/initialization_time.dart';
 import '../user_scope_status.dart';
+import 'user/service/user_service.dart';
+import 'user/service/user_service_impl.dart';
 import 'user_scope_dependencies.dart';
 
 final class UserScopeDependenciesImpl implements UserScopeDependencies {
-  const UserScopeDependenciesImpl._();
+  const UserScopeDependenciesImpl._(this.userService);
+
+  final UserService userService;
 
   static const _l = Logger(library: 'UserScopeDependenciesImpl');
 
@@ -20,20 +24,22 @@ final class UserScopeDependenciesImpl implements UserScopeDependencies {
 
     final initState = Init.of(context)..showScopeInitFailedScreen = false;
 
+    UserService? userService;
+
     final watch = Stopwatch()..start();
 
     try {
       yield const UserScopeInitialization();
 
       // ---- DEPENDENCIES INITIALIZATION STARTED ----
-
+      userService = UserServiceImpl(user);
       // ---- DEPENDENCIES INITIALIZATION FINISHED ----
 
       await stopInitWatch(AppDurations.minUserScopeInitDelay, watch, l);
 
-      const dependencies = UserScopeDependenciesImpl._();
+      final dependencies = UserScopeDependenciesImpl._(userService);
 
-      yield const UserScopeInitialized(dependencies);
+      yield UserScopeInitialized(dependencies);
 
       l.v('Initialization Completed');
     } on AppException catch (e, s) {
