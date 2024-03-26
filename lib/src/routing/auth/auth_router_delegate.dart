@@ -14,9 +14,7 @@ class AuthRouterDelegate extends RouterDelegate<AuthConfiguration> with ChangeNo
   static const _l = Logger(library: 'AuthRouterDelegate');
 
   bool _showSignUpScreen = false;
-
   bool get showSignUpScreen => _showSignUpScreen;
-  
   set showSignUpScreen(bool value) {
     _showSignUpScreen = value;
     notifyListeners();

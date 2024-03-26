@@ -6,17 +6,27 @@ import '../_pages/no_transition_page.dart';
 import 'todo_configuration.dart';
 
 class TodoRouterDelegate extends RouterDelegate<TodoConfiguration> with ChangeNotifier {
-  TodoRouterDelegate() : _navigatorKey = GlobalKey();
+  TodoRouterDelegate() : _navigatorKey = GlobalKey() {
+    selectedTab.addListener(notifyListeners);
+  }
 
   final GlobalKey<NavigatorState> _navigatorKey;
 
-  static const _l = Logger(library: 'AuthRouterDelegate');
+  static const _l = Logger(library: 'TodoRouterDelegate');
+
+  ValueNotifier<TodoTab> selectedTab = ValueNotifier(TodoTab.all);
+
+  @override
+  void dispose() {
+    selectedTab.addListener(notifyListeners);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) => Navigator(
-        key: _navigatorKey,
         onPopPage: _handleNavigatorPop,
         clipBehavior: Clip.none,
+        key: _navigatorKey,
         pages: <Page<void>>[
           //
           asNoTransitionPage(const TodoTabs(), 'TodoScreen'),
@@ -41,7 +51,7 @@ class TodoRouterDelegate extends RouterDelegate<TodoConfiguration> with ChangeNo
   bool _tryPopRoute() => false;
 
   @override
-  TodoConfiguration? get currentConfiguration => TodoConfiguration.empty();
+  TodoConfiguration? get currentConfiguration => TodoConfiguration(selectedTab: selectedTab.value);
 
   @override
   Future<void> setInitialRoutePath(TodoConfiguration configuration) async {
@@ -55,6 +65,8 @@ class TodoRouterDelegate extends RouterDelegate<TodoConfiguration> with ChangeNo
   @override
   Future<void> setNewRoutePath(TodoConfiguration configuration) async {
     final l = _l.copyWith(method: 'setNewRoutePath', params: 'configuration: $configuration');
+
+    selectedTab.value = configuration.selectedTab;
 
     l.v('Completed');
   }

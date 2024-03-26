@@ -1,14 +1,15 @@
 final class AuthConfiguration {
-  AuthConfiguration({required this.showSignUp});
+  const AuthConfiguration({required this.showSignUp});
 
-  AuthConfiguration.empty() : showSignUp = false;
+  const AuthConfiguration.signIn() : showSignUp = false;
+  const AuthConfiguration.signUp() : showSignUp = true;
 
   factory AuthConfiguration.fromUri(Uri uri) {
     if (uri.pathSegments.isNotEmpty && uri.pathSegments[0] == 'signup') {
-      return AuthConfiguration(showSignUp: true);
+      return const AuthConfiguration.signUp();
     }
 
-    return AuthConfiguration.empty();
+    return const AuthConfiguration.signIn();
   }
 
   final bool showSignUp;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../constants/sizes.dart';
-import '../../../../utils/common/desktop_constraints.dart';
 import '../../../../utils/mixins/localization_state_mixin.dart';
 import '../../../../utils/mixins/theme_state_mixin.dart';
 import '../../../_widgets/appbars/static_appbar.dart';

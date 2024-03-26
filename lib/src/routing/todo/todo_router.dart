@@ -8,6 +8,14 @@ import 'todo_router_delegate.dart';
 class TodoRouter extends StatefulWidget {
   const TodoRouter({super.key});
 
+  static TodoRouterDelegate of(BuildContext context) {
+    final delegate = context.getInheritedWidgetOfExactType<_TodoRouterInheritedWidget>()?.routerDelegate;
+
+    if (delegate == null) throw Exception('Invalid context: Missing _TodoRouterInheritedWidget');
+
+    return delegate;
+  }
+
   @override
   State<TodoRouter> createState() => _TodoRouterState();
 }
@@ -23,10 +31,25 @@ class _TodoRouterState extends State<TodoRouter> {
   late final _backButtonDispatcher = RootBackButtonDispatcher();
 
   @override
-  Widget build(BuildContext context) => Router(
+  Widget build(BuildContext context) => _TodoRouterInheritedWidget(
         routerDelegate: _routerDelegate,
-        routeInformationParser: _routeInformationParser,
-        routeInformationProvider: _routeInformationProvider,
-        backButtonDispatcher: _backButtonDispatcher,
+        child: Router(
+          routerDelegate: _routerDelegate,
+          routeInformationParser: _routeInformationParser,
+          routeInformationProvider: _routeInformationProvider,
+          backButtonDispatcher: _backButtonDispatcher,
+        ),
       );
+}
+
+class _TodoRouterInheritedWidget extends InheritedWidget {
+  const _TodoRouterInheritedWidget({
+    required this.routerDelegate,
+    required super.child,
+  });
+
+  final TodoRouterDelegate routerDelegate;
+
+  @override
+  bool updateShouldNotify(_TodoRouterInheritedWidget oldWidget) => false;
 }

@@ -3,11 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../constants/sizes.dart';
 import '../../../../l10n/lk.dart';
 import '../../../../utils/mixins/localization_state_mixin.dart';
-import '../../../_widgets/scaffolds/app_scaffold.dart';
-import '../../all_todos/all_todos_screen.dart';
-import '../../completed_todos/completed_todos_screen.dart';
-import '../../today_todos/today_todos_screen.dart';
-import '../../user_profile/user_profile_screen.dart';
+import '../../../_widgets/scaffolds/scroll_aware_scaffold.dart';
 import '../tabs_controller.dart';
 
 class DesktopTodoTabs extends StatefulWidget {
@@ -18,21 +14,14 @@ class DesktopTodoTabs extends StatefulWidget {
 }
 
 class _DesktopTodoTabsState extends State<DesktopTodoTabs> with LocalizationStateMixin, TodoTabsController {
-  static const tabsViews = <Widget>[
-    AllTodosScreen(),
-    CompletedTodosScreen(),
-    TodayTodosScreen(),
-    UserProfileScreen(),
-  ];
-
   @override
-  Widget build(BuildContext context) => AppScaffold(
+  Widget build(BuildContext context) => ScrollAwareScaffold(
         body: Row(
           children: <Widget>[
             //
             NavigationRail(
               selectedIndex: selectedTabIndex,
-              onDestinationSelected: onTabSelect,
+              onDestinationSelected: onTabTap,
               labelType: NavigationRailLabelType.all,
               destinations: <NavigationRailDestination>[
                 NavigationRailDestination(
