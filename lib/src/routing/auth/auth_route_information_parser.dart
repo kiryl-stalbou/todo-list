@@ -24,7 +24,7 @@ class AuthRouteInformationParser extends RouteInformationParser<AuthConfiguratio
 
     final routeInformation = RouteInformation(uri: configuration.toUri());
 
-    l.v('Completed with: $routeInformation');
+    l.v('Completed with: ${routeInformation.uri}');
 
     return routeInformation;
   }

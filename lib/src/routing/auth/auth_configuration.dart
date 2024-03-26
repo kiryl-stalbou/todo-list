@@ -5,7 +5,7 @@ final class AuthConfiguration {
 
   factory AuthConfiguration.fromUri(Uri uri) {
     if (uri.pathSegments.isNotEmpty && uri.pathSegments[0] == 'signup') {
-      AuthConfiguration(showSignUp: true);
+      return AuthConfiguration(showSignUp: true);
     }
 
     return AuthConfiguration.empty();
@@ -16,5 +16,5 @@ final class AuthConfiguration {
   Uri toUri() => Uri.parse(showSignUp ? '/signup' : '/signin');
 
   @override
-  String toString() => 'AuthConfig()';
+  String toString() => 'AuthConfig(showSignUp: $showSignUp)';
 }

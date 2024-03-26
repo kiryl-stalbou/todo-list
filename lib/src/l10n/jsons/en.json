@@ -4,6 +4,8 @@
     "proceed": "Continue",
     "ok": "OK",
     "cancel": "Cancel",
+    "toggleTheme": "Toggle theme",
+    "toggleLanguage": "Toggle language",
     "delete": "Delete",
     "name": "Username",
     "require": "Required",

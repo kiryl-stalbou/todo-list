@@ -13,6 +13,9 @@ abstract final class Lk {
         _ => Lk.errorUnknown,
       };
 
+
+  static const String toggleLanguage = 'toggleLanguage';
+  static const String toggleTheme = 'toggleTheme';
   static const String ok = 'ok';
   static const String email = 'email';
   static const String password = 'password';

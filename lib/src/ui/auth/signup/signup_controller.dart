@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../../l10n/lk.dart';
+import '../../../routing/auth/auth_router.dart';
 import '../../../scopes/app/dependencies/auth/auth.dart';
 import '../../../utils/common/text_validators.dart';
 import '../../_loading/global/global_loading.dart';
@@ -31,7 +32,7 @@ mixin SignUpControllerMixin<S extends StatefulWidget> on State<S> {
     );
   }
 
-  void onSignInTap() => _authState.showSignUpScreen = false;
+  void onSignInTap() => AuthRouter.of(context).showSignUpScreen = false;
 
   @override
   void initState() {

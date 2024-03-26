@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -15,7 +16,9 @@ class _TodoRouterState extends State<TodoRouter> {
   late final _routerDelegate = TodoRouterDelegate();
   late final _routeInformationParser = TodoRouteInformationParser();
   late final _routeInformationProvider = PlatformRouteInformationProvider(
-    initialRouteInformation: RouteInformation(uri: Uri.tryParse('/')),
+    initialRouteInformation: RouteInformation(
+      uri: Uri.parse(WidgetsBinding.instance.platformDispatcher.defaultRouteName),
+    ),
   );
   late final _backButtonDispatcher = RootBackButtonDispatcher();
 

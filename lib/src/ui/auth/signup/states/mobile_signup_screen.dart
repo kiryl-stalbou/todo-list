@@ -12,7 +12,6 @@ import '../../../_widgets/common/hide_keyboard_area.dart';
 import '../../../_widgets/common/paddings.dart';
 import '../../../_widgets/common/spacers.dart';
 import '../../../_widgets/interactive/bottom_button.dart';
-import '../../../_widgets/interactive/tap_detector.dart';
 import '../../../_widgets/interactive/validatable/validatable_form.dart';
 import '../../../_widgets/interactive/validatable/validatable_text_field.dart';
 import '../../../_widgets/scaffolds/app_scaffold.dart';
@@ -157,8 +156,8 @@ class _SignInButton extends StatelessWidget {
     final s = S.of(context);
 
     return Center(
-      child: TapDetector(
-        onTap: onTap,
+      child: TextButton(
+      onPressed: onTap,
         child: Text(
           s.key(Lk.signupHaveAcc),
           style: textTheme.bodySmall?.copyWith(

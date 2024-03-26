@@ -11,14 +11,10 @@ class Auth extends StatefulWidget {
   final Widget unauthenticated;
   final Widget Function(UserData user) authenticated;
 
-  static AuthState of(BuildContext context, {bool listen = false}) {
+  static AuthState of(BuildContext context) {
     AuthState? state;
 
-    if (listen) {
-      state = context.dependOnInheritedWidgetOfExactType<_AuthInheritedWidget>()?.state;
-    } else {
-      state = context.getInheritedWidgetOfExactType<_AuthInheritedWidget>()?.state;
-    }
+    state = context.getInheritedWidgetOfExactType<_AuthInheritedWidget>()?.state;
 
     if (state == null) throw Exception('Invalid context: missing _AuthInheritedWidget');
 
@@ -32,8 +28,7 @@ class Auth extends StatefulWidget {
 class AuthState extends State<Auth> {
   late final AuthService _service = AppScope.dependenciesOf(context).authService;
 
-  bool get showSignUpScreen => _service.showSignUpScreen;
-  set showSignUpScreen(bool value) => setState(() => _service.showSignUpScreen = value);
+  final showSignUpScreen = ValueNotifier(false);
 
   EitherFuture<void> signIn(String email, String password) => tryCatchEither(
         fn: () => _service.signIn(email, password),
@@ -50,7 +45,6 @@ class AuthState extends State<Auth> {
   @override
   Widget build(BuildContext context) => _AuthInheritedWidget(
         state: this,
-        showSignUpScreen: showSignUpScreen,
         child: StreamBuilder<UserData?>(
           initialData: _service.authStateChanges.valueOrNull,
           stream: _service.authStateChanges,
@@ -69,12 +63,10 @@ class _AuthInheritedWidget extends InheritedWidget {
   const _AuthInheritedWidget({
     required super.child,
     required this.state,
-    required this.showSignUpScreen,
   });
 
   final AuthState state;
-  final bool showSignUpScreen;
 
   @override
-  bool updateShouldNotify(_AuthInheritedWidget oldWidget) => oldWidget.showSignUpScreen != showSignUpScreen;
+  bool updateShouldNotify(_AuthInheritedWidget oldWidget) => false;
 }

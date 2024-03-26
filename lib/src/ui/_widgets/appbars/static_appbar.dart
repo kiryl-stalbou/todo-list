@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../app.dart';
 import '../../../constants/colors.dart';
+import '../../../l10n/lk.dart';
+import '../../../l10n/s.dart';
 import '../common/three_children_layout.dart';
-import '../interactive/app_icon_button.dart';
 
 class StaticAppBar extends StatelessWidget {
   const StaticAppBar({
@@ -19,6 +20,7 @@ class StaticAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appBarTheme = Theme.of(context).appBarTheme;
+    final s = S.of(context);
 
     Widget? title = this.title;
     if (title != null) {
@@ -45,8 +47,16 @@ class StaticAppBar extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                AppIconButton(onTap: () => TodoLocalizations.toggle(context), icon: const Icon(Icons.language)),
-                AppIconButton(onTap: () => TodoTheme.toggle(context), icon: const Icon(CupertinoIcons.moon_circle)),
+                IconButton(
+                  tooltip: s.key(Lk.toggleLanguage),
+                  onPressed: () => TodoLocalizations.toggle(context),
+                  icon: const Icon(Icons.language),
+                ),
+                IconButton(
+                  tooltip: s.key(Lk.toggleTheme),
+                  onPressed: () => TodoTheme.toggle(context),
+                  icon: const Icon(CupertinoIcons.moon_circle),
+                ),
               ],
             ),
           ),

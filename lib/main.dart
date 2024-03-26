@@ -27,7 +27,7 @@ Future<void> _initFlutter() async {
 
   WidgetsBinding.instance.addObserver(const WidgetsBindingLogger());
 
-  // Tree shaking will delete this for not web compilation
+  // Tree shaking will delete this for non-web compilation
   if (kIsWeb) usePathUrlStrategy();
 
   await SystemChrome.setPreferredOrientations([
