@@ -26,6 +26,7 @@ class RawDialog extends StatelessWidget {
 
     return Center(
       child: DesktopConstraints(
+        maxWidth: 400,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: Insets.xxl),
           child: DecoratedBox(

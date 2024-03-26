@@ -26,9 +26,9 @@ mixin SignUpControllerMixin<S extends StatefulWidget> on State<S> {
     await _globalLoadingState.run(
       context,
       () => _authState.signUp(name, email, password),
-      activeLk: Lk.signinActive,
-      successLk: Lk.signinSuccess,
-      failedLk: Lk.signinFailed,
+      activeLk: Lk.signupActive,
+      successLk: Lk.signupSuccess,
+      failedLk: Lk.signupFailed,
     );
   }
 
