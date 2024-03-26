@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 import 'app.dart';
 
@@ -24,6 +26,8 @@ Future<void> _initFlutter() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   WidgetsBinding.instance.addObserver(const WidgetsBindingLogger());
+
+  if (kIsWeb) usePathUrlStrategy();
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
