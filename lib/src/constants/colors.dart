@@ -26,3 +26,14 @@ abstract final class AppColors {
   static const Color blue = Colors.blue;
   static const Color blue26 = Color.fromARGB(66, 33, 149, 243);
 }
+
+abstract final class Shadows {
+  static const List<BoxShadow> top = [
+    BoxShadow(
+      color: AppColors.black26,
+      offset: Offset.zero,
+      spreadRadius: 0,
+      blurRadius: 15,
+    ),
+  ];
+}

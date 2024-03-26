@@ -17,4 +17,15 @@ class TodoRouteInformationParser extends RouteInformationParser<TodoConfiguratio
 
     return configuration;
   }
+
+  @override
+  RouteInformation? restoreRouteInformation(TodoConfiguration configuration) {
+    final l = _l.copyWith(method: 'restoreRouteInformation', params: 'configuration: $configuration');
+
+    final routeInformation = RouteInformation(uri: configuration.toUri());
+
+    l.v('Completed with: ${routeInformation.uri}');
+
+    return routeInformation;
+  }
 }

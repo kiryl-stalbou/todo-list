@@ -8,5 +8,9 @@ class HideKeyboardArea extends StatelessWidget {
   final Widget child;
 
   @override
-  Widget build(BuildContext context) => GestureDetector(onTap: hideKeyBoard, child: child);
+  Widget build(BuildContext context) => GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: hideKeyBoard,
+        child: child,
+      );
 }

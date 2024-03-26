@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 
 import '../../../../app.dart';
 import '../../../constants/colors.dart';
+import '../../../constants/sizes.dart';
 import '../../../l10n/lk.dart';
 import '../../../l10n/s.dart';
+import '../common/spacers.dart';
 import '../common/three_children_layout.dart';
 
 class StaticAppBar extends StatelessWidget {
@@ -57,6 +59,7 @@ class StaticAppBar extends StatelessWidget {
                   onPressed: () => TodoTheme.toggle(context),
                   icon: const Icon(CupertinoIcons.moon_circle),
                 ),
+                const HSpacer(Insets.s),
               ],
             ),
           ),

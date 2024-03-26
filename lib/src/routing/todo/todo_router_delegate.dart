@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../logs/logger.dart';
-import '../../ui/todo/todo_screen.dart';
+import '../../ui/todo/_tabs/todo_tabs.dart';
 import '../_pages/no_transition_page.dart';
 import 'todo_configuration.dart';
 
@@ -19,7 +19,7 @@ class TodoRouterDelegate extends RouterDelegate<TodoConfiguration> with ChangeNo
         clipBehavior: Clip.none,
         pages: <Page<void>>[
           //
-          asNoTransitionPage(const TodoScreen(), 'TodoScreen'),
+          asNoTransitionPage(const TodoTabs(), 'TodoScreen'),
         ],
       );
 
@@ -39,6 +39,9 @@ class TodoRouterDelegate extends RouterDelegate<TodoConfiguration> with ChangeNo
   }
 
   bool _tryPopRoute() => false;
+
+  @override
+  TodoConfiguration? get currentConfiguration => TodoConfiguration.empty();
 
   @override
   Future<void> setInitialRoutePath(TodoConfiguration configuration) async {

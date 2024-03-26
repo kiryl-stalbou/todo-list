@@ -200,6 +200,7 @@ class _TodoThemeState extends State<TodoTheme> {
   ThemeMode? _themeMode;
 
   void toggleTheme() {
+    _themeMode ??= MediaQuery.platformBrightnessOf(context) == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
     final mode = _themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
     setState(() => _themeMode = mode);
   }

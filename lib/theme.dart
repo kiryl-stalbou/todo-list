@@ -260,6 +260,14 @@ ThemeData _themeFor(ColorScheme colorScheme, TextTheme textTheme) => ThemeData(
       badgeTheme: const BadgeThemeData(
         textStyle: TextStyle(height: 1, fontSize: FontSize.s12),
       ),
+      navigationRailTheme: NavigationRailThemeData(
+        minWidth: 120,
+        backgroundColor: colorScheme.surface,
+        indicatorColor: colorScheme.primaryContainer,
+        indicatorShape: const StadiumBorder(),
+        selectedLabelTextStyle: textTheme.bodySmall?.copyWith(height: 1, fontSize: FontSize.s14),
+        unselectedLabelTextStyle: textTheme.bodySmall?.copyWith(height: 1, fontSize: FontSize.s14),
+      ),
       navigationBarTheme: NavigationBarThemeData(
         height: 60,
         shadowColor: colorScheme.shadow,

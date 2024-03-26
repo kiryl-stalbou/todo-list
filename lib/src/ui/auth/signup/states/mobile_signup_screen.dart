@@ -33,7 +33,6 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> with SignUpCont
           child: ListView(
             children: [
               //
-
               const VSpacer(Insets.xxl),
 
               const Center(child: SignUpTitle()),

@@ -14,9 +14,14 @@ abstract final class Lk {
       };
 
 
+  static const String all = 'all';
+  static const String today = 'today';
+  static const String completed = 'completed';
+  static const String profile = 'profile';
   static const String toggleLanguage = 'toggleLanguage';
-  static const String toggleTheme = 'toggleTheme';
   static const String ok = 'ok';
+  static const String signout = 'signout';
+  static const String toggleTheme = 'toggleTheme';
   static const String email = 'email';
   static const String password = 'password';
   static const String name = 'name';
@@ -46,6 +51,10 @@ abstract final class Lk {
 
   static const String scopeInitErrorTitle = 'scopeInitErrorTitle';
   static const String scopeInitErrorSubtitle = 'scopeInitErrorSubtitle';
+
+  static const String profileSignOutActive = 'profileSignOutActive';
+  static const String profileSignOutSuccess = 'profileSignOutSuccess';
+  static const String profileSignOutFailed = 'profileSignOutFailed';
 
   static const String errorInvalidCredential = 'errorInvalidCredential';
   static const String errorUserNotFound = 'errorUserNotFound';
