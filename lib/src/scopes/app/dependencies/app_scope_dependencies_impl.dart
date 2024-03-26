@@ -50,6 +50,9 @@ final class AppScopeDependenciesImpl implements AppScopeDependencies {
     } on AppException catch (e, s) {
       l.error(e, s, reason: 'Initialization Failed');
 
+      authService?.dispose();
+      authRepository?.dispose();
+
       initState.showScopeInitFailedScreen = true;
 
       await stopInitWatch(AppDurations.minAppScopeInitDelay, watch, l);
@@ -59,6 +62,8 @@ final class AppScopeDependenciesImpl implements AppScopeDependencies {
   @override
   void dispose() {
     final l = _l.copyWith(method: 'dispose', params: '');
+
+    authService.dispose();
 
     l.v('Completed');
   }
