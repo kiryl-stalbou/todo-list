@@ -15,7 +15,6 @@ import 'src/scopes/app/app_scope.dart';
 import 'src/scopes/app/dependencies/auth/auth.dart';
 import 'src/scopes/user/user_scope.dart';
 import 'src/ui/_errors/uncaught_errors.dart';
-import 'src/ui/_init/init.dart';
 import 'src/ui/_loading/global/global_loading.dart';
 import 'theme.dart';
 
@@ -28,16 +27,12 @@ class TodoApp extends StatelessWidget {
   Widget build(BuildContext context) => _WidgetsApp(
         uncaughtErrorsController: uncaughtErrorsController,
         // debugShowWidgetsInspector: true,
-        child: Init(
-          child: AppScope(
-            initialization: const InitRouter(),
-            initialized: Auth(
-              unauthenticated: const AuthRouter(),
-              authenticated: (user) => UserScope(
-                user: user,
-                initialization: const InitRouter(),
-                initialized: const TodoRouter(),
-              ),
+        child: AppScope(
+          initialized: Auth(
+            unauthenticated: const AuthRouter(),
+            authenticated: (user) => UserScope(
+              user: user,
+              initialized: const TodoRouter(),
             ),
           ),
         ),

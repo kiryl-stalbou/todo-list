@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../scopes/app/dependencies/auth/auth.dart';
+import '../../scopes/user/dependencies/user/user.dart';
 import '../_widgets/interactive/tap_detector.dart';
 
 class TodoScreen extends StatelessWidget {
@@ -10,7 +11,7 @@ class TodoScreen extends StatelessWidget {
   Widget build(BuildContext context) => Center(
         child: TapDetector(
           onTap: () => Auth.of(context).signOut(),
-          child: Text('TODO'),
+          child: Text('${User.of(context).user}'),
         ),
       );
 }

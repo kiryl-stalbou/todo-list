@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../entities/user/user_data.dart';
-import '../../ui/_init/init.dart';
+import '../../ui/_init/scope_init_active_screen.dart';
+import '../../ui/_init/scope_init_failed_screen.dart';
 import 'dependencies/user_scope_dependencies.dart';
 import 'dependencies/user_scope_dependencies_impl.dart';
 import 'dependencies/user_scope_dependencies_tree.dart';
@@ -12,12 +13,10 @@ import 'user_scope_status.dart';
 class UserScope extends StatefulWidget {
   UserScope({
     required this.user,
-    required this.initialization,
     required this.initialized,
   }) : super(key: ValueKey(user));
 
   final UserData user;
-  final Widget initialization;
   final Widget initialized;
 
   static UserScopeDependencies dependenciesOf(BuildContext context) {
@@ -33,19 +32,17 @@ class UserScope extends StatefulWidget {
 }
 
 class _UserScopeState extends State<UserScope> {
-  late Stream<UserScopeStatus> _dependenciesInitializer;
+  late Stream<UserScopeInitStatus> _initializer;
   UserScopeDependencies? _dependencies;
 
-  void _resolveDependenciesInitializer() {
-    _dependenciesInitializer = UserScopeDependenciesImpl.initializer(context, widget.user);
+  void _resolveInitializer() {
+    _initializer = UserScopeDependenciesImpl.initializer(widget.user);
   }
 
   @override
   void initState() {
     super.initState();
-    _resolveDependenciesInitializer();
-    
-    Init.of(context).onScopeInitReload = () => setState(_resolveDependenciesInitializer);
+    _resolveInitializer();
   }
 
   @override
@@ -56,7 +53,6 @@ class _UserScopeState extends State<UserScope> {
 
   Widget _initialized(UserScopeDependencies dependencies) {
     _dependencies = dependencies;
-
     return _UserScopeInheritedWidget(
       dependencies: dependencies,
       child: UserScopeDependenciesTree(
@@ -66,12 +62,13 @@ class _UserScopeState extends State<UserScope> {
   }
 
   @override
-  Widget build(BuildContext context) => StreamBuilder<UserScopeStatus>(
-        stream: _dependenciesInitializer,
-        initialData: const UserScopeInitialization(),
+  Widget build(BuildContext context) => StreamBuilder<UserScopeInitStatus>(
+        stream: _initializer,
+        initialData: const UserScopeInitActive(),
         builder: (context, snapshot) => switch (snapshot.requireData) {
-          UserScopeInitialization() => widget.initialization,
-          UserScopeInitialized(:final dependencies) => _initialized(dependencies),
+          UserScopeInitActive() => const ScopeInitActiveScreen(),
+          UserScopeInitFailed() => ScopeInitFailedScreen(_resolveInitializer),
+          UserScopeInitSuccess(:final dependencies) => _initialized(dependencies),
         },
       );
 }

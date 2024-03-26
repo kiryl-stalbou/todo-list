@@ -1,11 +1,6 @@
-import 'package:flutter/widgets.dart';
-
-import '../../../constants/durations.dart';
 import '../../../exceptions/impl/_app_exception.dart';
 import '../../../logs/logger.dart';
 
-import '../../../ui/_init/init.dart';
-import '../../../utils/common/initialization_time.dart';
 import '../app_scope_status.dart';
 import 'app_scope_dependencies.dart';
 import 'auth/repository/auth_repository.dart';
@@ -21,18 +16,14 @@ final class AppScopeDependenciesImpl implements AppScopeDependencies {
 
   static const _l = Logger(library: 'AppScopeDependenciesImpl');
 
-  static Stream<AppScopeStatus> initializer(BuildContext context) async* {
+  static Stream<AppScopeInitStatus> initializer() async* {
     final l = _l.copyWith(method: 'initializer', params: '');
-
-    final initState = Init.of(context)..showScopeInitFailedScreen = false;
-
-    final watch = Stopwatch()..start();
 
     AuthService? authService;
     AuthRepository? authRepository;
 
     try {
-      yield const AppScopeInitialization();
+      yield const AppScopeInitActive();
 
       // ---- DEPENDENCIES INITIALIZATION STARTED ----
       authRepository = AuthRepositoryImpl();
@@ -40,11 +31,9 @@ final class AppScopeDependenciesImpl implements AppScopeDependencies {
       authService = AuthServiceImpl(authRepository);
       // ---- DEPENDENCIES INITIALIZATION FINISHED ----
 
-      await stopInitWatch(AppDurations.minAppScopeInitDelay, watch, l);
-
       final dependencies = AppScopeDependenciesImpl._(authService);
 
-      yield AppScopeInitialized(dependencies);
+      yield AppScopeInitSuccess(dependencies);
 
       l.v('Initialization Completed');
     } on AppException catch (e, s) {
@@ -53,9 +42,7 @@ final class AppScopeDependenciesImpl implements AppScopeDependencies {
       authService?.dispose();
       authRepository?.dispose();
 
-      initState.showScopeInitFailedScreen = true;
-
-      await stopInitWatch(AppDurations.minAppScopeInitDelay, watch, l);
+      yield const AppScopeInitFailed();
     }
   }
 

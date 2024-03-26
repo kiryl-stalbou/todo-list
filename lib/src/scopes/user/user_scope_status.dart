@@ -1,14 +1,18 @@
 import 'dependencies/user_scope_dependencies.dart';
 
 /// States of user scope initialization flow.
-sealed class UserScopeStatus {}
+sealed class UserScopeInitStatus {}
 
-final class UserScopeInitialization implements UserScopeStatus {
-  const UserScopeInitialization();
+final class UserScopeInitActive implements UserScopeInitStatus {
+  const UserScopeInitActive();
 }
 
-final class UserScopeInitialized implements UserScopeStatus {
-  const UserScopeInitialized(this.dependencies);
+final class UserScopeInitFailed implements UserScopeInitStatus {
+  const UserScopeInitFailed();
+}
+
+final class UserScopeInitSuccess implements UserScopeInitStatus {
+  const UserScopeInitSuccess(this.dependencies);
 
   final UserScopeDependencies dependencies;
 }

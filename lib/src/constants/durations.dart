@@ -33,10 +33,10 @@ abstract final class AppDurations {
   static const Duration autoScroll = _1000ms;
 
   /// 1200ms
-  static const Duration minAppScopeInitDelay = _1200ms;
+  static const Duration minAppScopeInitDelay = _1000ms;
 
   /// 1200ms
-  static const Duration minUserScopeInitDelay = _1800ms;
+  static const Duration minUserScopeInitDelay = _1000ms;
 
   /// 1800ms
   static const Duration globalLoadingScreenAnimationDelay = _1800ms;

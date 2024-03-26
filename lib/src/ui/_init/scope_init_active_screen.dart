@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../theme.dart';
-import '../../../constants/durations.dart';
-import '../../../constants/sizes.dart';
-import '../../../utils/mixins/theme_state_mixin.dart';
-import '../../_widgets/animated/animated_translation.dart';
-import '../../_widgets/common/paddings.dart';
+import '../../../theme.dart';
+import '../../constants/sizes.dart';
+import '../../utils/mixins/theme_state_mixin.dart';
+import '../_widgets/common/paddings.dart';
 
 class ScopeInitActiveScreen extends StatefulWidget {
   const ScopeInitActiveScreen({super.key});

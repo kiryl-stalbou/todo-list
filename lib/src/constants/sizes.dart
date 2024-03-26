@@ -79,8 +79,8 @@ abstract final class Buttons {
   /// 52
   static const double lHeight = 52;
 
-  /// 200
-  static const double lWidth = kIsWeb ? 500 : double.infinity;
+  /// infinity
+  static const double lWidth = double.infinity;
 
   /// 45
   static const double mHeight = 45;

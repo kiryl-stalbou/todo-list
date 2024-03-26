@@ -13,7 +13,7 @@ final class AuthConfiguration {
 
   final bool showSignUp;
 
-  Uri toUri() => Uri.parse(showSignUp ? 'signup' : 'signin');
+  Uri toUri() => Uri.parse(showSignUp ? '/signup' : '/signin');
 
   @override
   String toString() => 'AuthConfig()';

@@ -248,7 +248,6 @@ ThemeData _themeFor(ColorScheme colorScheme, TextTheme textTheme) => ThemeData(
         scrolledUnderElevation: 16,
         toolbarHeight: kToolbarHeight,
         shadowColor: colorScheme.shadow,
-        // backgroundColor: Colors.blue,
         backgroundColor: colorScheme.surface,
         surfaceTintColor: colorScheme.surface,
         foregroundColor: colorScheme.onSurface,

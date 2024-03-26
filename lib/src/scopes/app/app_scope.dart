@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../ui/_init/init.dart';
+import '../../ui/_init/scope_init_active_screen.dart';
+import '../../ui/_init/scope_init_failed_screen.dart';
 import 'app_scope_status.dart';
 import 'dependencies/app_scope_dependencies.dart';
 import 'dependencies/app_scope_dependencies_impl.dart';
@@ -10,12 +11,10 @@ import 'dependencies/app_scope_dependencies_tree.dart';
 
 class AppScope extends StatefulWidget {
   const AppScope({
-    required this.initialization,
     required this.initialized,
     super.key,
   });
 
-  final Widget initialization;
   final Widget initialized;
 
   static AppScopeDependencies dependenciesOf(BuildContext context) {
@@ -31,20 +30,17 @@ class AppScope extends StatefulWidget {
 }
 
 class _AppScopeState extends State<AppScope> {
-  late Stream<AppScopeStatus> _dependenciesInitializer;
-
+  late Stream<AppScopeInitStatus> _initializer;
   AppScopeDependencies? _dependencies;
 
-  void _resolveDependenciesInitializer() {
-    _dependenciesInitializer = AppScopeDependenciesImpl.initializer(context);
+  void _resolveInitializer() {
+    _initializer = AppScopeDependenciesImpl.initializer();
   }
 
   @override
   void initState() {
     super.initState();
-    _resolveDependenciesInitializer();
-
-    Init.of(context).onScopeInitReload = () => setState(_resolveDependenciesInitializer);
+    _resolveInitializer();
   }
 
   @override
@@ -55,7 +51,6 @@ class _AppScopeState extends State<AppScope> {
 
   Widget _initialized(AppScopeDependencies dependencies) {
     _dependencies = dependencies;
-
     return _AppScopeInheritedWidget(
       dependencies: dependencies,
       child: AppScopeDependenciesTree(
@@ -65,12 +60,13 @@ class _AppScopeState extends State<AppScope> {
   }
 
   @override
-  Widget build(BuildContext context) => StreamBuilder<AppScopeStatus>(
-        initialData: const AppScopeInitialization(),
-        stream: _dependenciesInitializer,
+  Widget build(BuildContext context) => StreamBuilder<AppScopeInitStatus>(
+        initialData: const AppScopeInitActive(),
+        stream: _initializer,
         builder: (context, snapshot) => switch (snapshot.requireData) {
-          AppScopeInitialization() => widget.initialization,
-          AppScopeInitialized(:final dependencies) => _initialized(dependencies),
+          AppScopeInitActive() => const ScopeInitActiveScreen(),
+          AppScopeInitFailed() => ScopeInitFailedScreen(_resolveInitializer),
+          AppScopeInitSuccess(:final dependencies) => _initialized(dependencies),
         },
       );
 }
