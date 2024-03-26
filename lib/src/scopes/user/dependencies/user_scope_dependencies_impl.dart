@@ -1,7 +1,9 @@
+import '../../../constants/durations.dart';
 import '../../../entities/user/user_data.dart';
 import '../../../exceptions/impl/_app_exception.dart';
 import '../../../logs/logger.dart';
 
+import '../../../utils/common/initialization_time.dart';
 import '../user_scope_status.dart';
 import 'user/service/user_service.dart';
 import 'user/service/user_service_impl.dart';
@@ -20,6 +22,8 @@ final class UserScopeDependenciesImpl implements UserScopeDependencies {
 
     UserService? userService;
 
+    final watch = Stopwatch()..start();
+
     try {
       yield const UserScopeInitActive();
 
@@ -29,11 +33,15 @@ final class UserScopeDependenciesImpl implements UserScopeDependencies {
 
       final dependencies = UserScopeDependenciesImpl._(userService);
 
+      await stopInitWatch(AppDurations.minUserScopeInitDelay, watch, l);
+
       yield UserScopeInitSuccess(dependencies);
 
       l.v('Initialization Completed');
     } on AppException catch (e, s) {
       l.error(e, s, reason: 'Initialization Failed');
+
+      await stopInitWatch(AppDurations.minAppScopeInitDelay, watch, l);
 
       yield const UserScopeInitFailed();
     }

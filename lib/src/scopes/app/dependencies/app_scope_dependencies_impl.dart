@@ -1,6 +1,8 @@
+import '../../../constants/durations.dart';
 import '../../../exceptions/impl/_app_exception.dart';
 import '../../../logs/logger.dart';
 
+import '../../../utils/common/initialization_time.dart';
 import '../app_scope_status.dart';
 import 'app_scope_dependencies.dart';
 import 'auth/repository/auth_repository.dart';
@@ -22,6 +24,8 @@ final class AppScopeDependenciesImpl implements AppScopeDependencies {
     AuthService? authService;
     AuthRepository? authRepository;
 
+    final watch = Stopwatch()..start();
+
     try {
       yield const AppScopeInitActive();
 
@@ -33,6 +37,8 @@ final class AppScopeDependenciesImpl implements AppScopeDependencies {
 
       final dependencies = AppScopeDependenciesImpl._(authService);
 
+      await stopInitWatch(AppDurations.minAppScopeInitDelay, watch, l);
+
       yield AppScopeInitSuccess(dependencies);
 
       l.v('Initialization Completed');
@@ -41,6 +47,8 @@ final class AppScopeDependenciesImpl implements AppScopeDependencies {
 
       authService?.dispose();
       authRepository?.dispose();
+
+      await stopInitWatch(AppDurations.minAppScopeInitDelay, watch, l);
 
       yield const AppScopeInitFailed();
     }
