@@ -4,13 +4,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 import 'app.dart';
 
 import 'firebase_options.dart';
 import 'src/logs/logger.dart';
 import 'src/logs/widgets_binding_logger.dart';
+import 'src/utils/common/path_url_strategy.dart';
 
 // dart run build_runner build --delete-conflicting-outputs
 
@@ -27,6 +27,7 @@ Future<void> _initFlutter() async {
 
   WidgetsBinding.instance.addObserver(const WidgetsBindingLogger());
 
+  // Tree shaking will delete this for not web compilation
   if (kIsWeb) usePathUrlStrategy();
 
   await SystemChrome.setPreferredOrientations([
