@@ -14,9 +14,9 @@ class Auth extends StatefulWidget {
   static AuthState of(BuildContext context) {
     AuthState? state;
 
-    state = context.getInheritedWidgetOfExactType<_AuthInheritedWidget>()?.state;
+    state = context.getInheritedWidgetOfExactType<_AuthScope>()?.state;
 
-    if (state == null) throw Exception('Invalid context: missing _AuthInheritedWidget');
+    if (state == null) throw Exception('Invalid context: missing _AuthScope');
 
     return state;
   }
@@ -43,7 +43,7 @@ class AuthState extends State<Auth> {
       );
 
   @override
-  Widget build(BuildContext context) => _AuthInheritedWidget(
+  Widget build(BuildContext context) => _AuthScope(
         state: this,
         child: StreamBuilder<UserData?>(
           initialData: _service.authStateChanges.valueOrNull,
@@ -59,8 +59,8 @@ class AuthState extends State<Auth> {
       );
 }
 
-class _AuthInheritedWidget extends InheritedWidget {
-  const _AuthInheritedWidget({
+class _AuthScope extends InheritedWidget {
+  const _AuthScope({
     required super.child,
     required this.state,
   });
@@ -68,5 +68,5 @@ class _AuthInheritedWidget extends InheritedWidget {
   final AuthState state;
 
   @override
-  bool updateShouldNotify(_AuthInheritedWidget oldWidget) => false;
+  bool updateShouldNotify(_AuthScope oldWidget) => false;
 }

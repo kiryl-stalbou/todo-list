@@ -13,9 +13,9 @@ class User extends StatefulWidget {
     UserState? state;
 
     if (listen) {
-      state = context.dependOnInheritedWidgetOfExactType<_UserInheritedModel>()?.state;
+      state = context.dependOnInheritedWidgetOfExactType<_UserScope>()?.state;
     } else {
-      state = context.getInheritedWidgetOfExactType<_UserInheritedModel>()?.state;
+      state = context.getInheritedWidgetOfExactType<_UserScope>()?.state;
     }
 
     if (state == null) throw Exception('Invalid context: missing _UserInheritedModel');
@@ -33,15 +33,15 @@ class UserState extends State<User> {
   UserData get user => _service.user;
 
   @override
-  Widget build(BuildContext context) => _UserInheritedModel(
+  Widget build(BuildContext context) => _UserScope(
         state: this,
         user: user,
         child: widget.child,
       );
 }
 
-class _UserInheritedModel extends InheritedWidget {
-  const _UserInheritedModel({
+class _UserScope extends InheritedWidget {
+  const _UserScope({
     required this.state,
     required this.user,
     required super.child,
@@ -51,5 +51,5 @@ class _UserInheritedModel extends InheritedWidget {
   final UserData user;
 
   @override
-  bool updateShouldNotify(_UserInheritedModel oldWidget) => oldWidget.user != user;
+  bool updateShouldNotify(_UserScope oldWidget) => oldWidget.user != user;
 }

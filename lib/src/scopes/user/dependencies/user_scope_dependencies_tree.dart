@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+import 'todo/todo.dart';
 import 'user/user.dart';
 
 class UserScopeDependenciesTree extends StatelessWidget {
@@ -8,5 +9,9 @@ class UserScopeDependenciesTree extends StatelessWidget {
   final Widget child;
 
   @override
-  Widget build(BuildContext context) => User(child: child);
+  Widget build(BuildContext context) => User(
+        child: Todo(
+          child: child,
+        ),
+      );
 }
