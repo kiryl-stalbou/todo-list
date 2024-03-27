@@ -1,11 +1,18 @@
 // ignore_for_file: constant_identifier_names
 
 abstract final class AppDurations {
+  static const Duration _0ms = Duration.zero;
   static const Duration _300ms = Duration(milliseconds: 300);
   static const Duration _400ms = Duration(milliseconds: 400);
   static const Duration _800ms = Duration(milliseconds: 800);
   static const Duration _1000ms = Duration(milliseconds: 1000);
   static const Duration _1800ms = Duration(milliseconds: 1800);
+
+  /// _0ms
+  static const Duration zero = _0ms;
+
+  /// _300ms
+  static const Duration animatedListChanged = _300ms;
 
   /// 300ms
   static const Duration dialog = _300ms;

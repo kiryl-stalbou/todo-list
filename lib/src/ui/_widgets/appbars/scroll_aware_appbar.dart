@@ -7,6 +7,7 @@ import 'static_appbar.dart';
 class ScrollAwareAppBar extends StatelessWidget {
   const ScrollAwareAppBar({
     this.title,
+    this.actions,
     this.titleSpacing,
     this.showTitleScrollExtent,
     super.key,
@@ -14,6 +15,7 @@ class ScrollAwareAppBar extends StatelessWidget {
 
   final Widget? title;
   final double? titleSpacing;
+  final List<Widget>? actions;
   final double? showTitleScrollExtent;
 
   @override
@@ -28,6 +30,7 @@ class ScrollAwareAppBar extends StatelessWidget {
     return ScrollAwareElevation(
       child: StaticAppBar(
         title: title,
+        actions: actions,
         titleSpacing: titleSpacing,
       ),
     );

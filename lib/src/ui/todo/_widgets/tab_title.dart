@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../_widgets/common/paddings.dart';
+
 class TabTitle extends StatelessWidget {
   const TabTitle(this.data, {super.key});
 
@@ -10,9 +12,11 @@ class TabTitle extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return SliverToBoxAdapter(
-      child: Text(
-        data,
-        style: textTheme.headlineMedium,
+      child: AppPadding(
+        child: Text(
+          data,
+          style: textTheme.headlineMedium,
+        ),
       ),
     );
   }

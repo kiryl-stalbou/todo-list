@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../constants/colors.dart';
-import '../../../constants/curves.dart';
-import '../../../constants/durations.dart';
 import '../../../constants/sizes.dart';
+import '../../../utils/mixins/ensure_visible.dart';
 import '../../../utils/mixins/focus_state_mixin.dart';
 import '../../../utils/mixins/theme_state_mixin.dart';
 import 'clear_button.dart';
@@ -51,29 +50,15 @@ class AppTextField extends StatefulWidget {
 
 class _AppTextFieldState extends State<AppTextField> with ThemeStateMixin, FocusStateMixin {
   late final _effectiveController = widget.controller ?? TextEditingController();
-  late final _suffixIcon = widget.readOnly ? null : ClearButton(controller: _effectiveController);
 
   @override
   bool get canRequestFocus => !widget.readOnly;
 
   @override
-  void onFocusChanged() => setState(() {
-        // ignore: discarded_futures
-        if (hasFocus) _ensureVisible();
-      });
-
-  Future<void> _ensureVisible() async {
-    // Wait for keyboard animatinon
-    await Future<void>.delayed(const Duration(milliseconds: 600));
-
-    if (mounted && hasFocus) {
-      await Scrollable.ensureVisible(
-        context,
-        alignment: 0.55,
-        curve: AppCurves.autoScroll,
-        duration: AppDurations.autoScroll,
-      );
-    }
+  void onFocusChanged() {
+    setState(() {});
+    // ignore: discarded_futures
+    if (hasFocus) ensureTextFieldVisible(context, focusNode);
   }
 
   @override
@@ -88,6 +73,7 @@ class _AppTextFieldState extends State<AppTextField> with ThemeStateMixin, Focus
     final labelColor = widget.hasError ? colorScheme.error : (hasFocus ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.5));
 
     final prefixIcon = widget.prefixIcon != null ? Icon(widget.prefixIcon, color: labelColor) : null;
+    final suffixIcon = widget.readOnly ? null : ClearButton(controller: _effectiveController);
 
     Widget body = RepaintBoundary(
       child: DecoratedBox(
@@ -121,7 +107,7 @@ class _AppTextFieldState extends State<AppTextField> with ThemeStateMixin, Focus
             decoration: InputDecoration(
               counterText: '',
               prefixIcon: prefixIcon,
-              suffixIcon: _suffixIcon,
+              suffixIcon: suffixIcon,
               labelText: widget.label,
               floatingLabelBehavior: FloatingLabelBehavior.auto,
               floatingLabelAlignment: FloatingLabelAlignment.start,

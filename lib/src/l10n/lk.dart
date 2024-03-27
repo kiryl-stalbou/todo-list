@@ -14,7 +14,11 @@ abstract final class Lk {
       };
 
 
+
   static const String all = 'all';
+  static const String addTodo = 'addTodo';
+  static const String title = 'title';
+  static const String notes = 'notes';
   static const String today = 'today';
   static const String completed = 'completed';
   static const String profile = 'profile';

@@ -289,11 +289,9 @@ ThemeData _themeFor(ColorScheme colorScheme, TextTheme textTheme) => ThemeData(
         color: colorScheme.outlineVariant,
       ),
       checkboxTheme: CheckboxThemeData(
-        visualDensity: VisualDensity.compact,
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        shape: const CircleBorder(),
+        materialTapTargetSize: MaterialTapTargetSize.padded,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
         side: BorderSide(color: colorScheme.onSurface, width: 1),
-        fillColor: MaterialStatePropertyAll(colorScheme.surface),
-        checkColor: MaterialStatePropertyAll(colorScheme.onPrimary),
-        shape: const RoundedRectangleBorder(borderRadius: Corners.xsBorderRadius),
       ),
     );

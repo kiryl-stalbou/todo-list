@@ -12,17 +12,18 @@ import '../common/three_children_layout.dart';
 class StaticAppBar extends StatelessWidget {
   const StaticAppBar({
     this.title,
+    this.actions,
     this.titleSpacing,
     super.key,
   });
 
   final Widget? title;
+  final List<Widget>? actions;
   final double? titleSpacing;
 
   @override
   Widget build(BuildContext context) {
     final appBarTheme = Theme.of(context).appBarTheme;
-    final s = S.of(context);
 
     Widget? title = this.title;
     if (title != null) {
@@ -49,16 +50,13 @@ class StaticAppBar extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                IconButton(
-                  tooltip: s.key(Lk.toggleLanguage),
-                  onPressed: () => TodoLocalizations.toggle(context),
-                  icon: const Icon(Icons.language),
-                ),
-                IconButton(
-                  tooltip: s.key(Lk.toggleTheme),
-                  onPressed: () => TodoTheme.toggle(context),
-                  icon: const Icon(CupertinoIcons.moon_circle),
-                ),
+                //
+                ...?actions,
+
+                const _ToggleLanguageButton(),
+
+                const _ToggleThemeButton(),
+
                 const HSpacer(Insets.s),
               ],
             ),
@@ -67,4 +65,26 @@ class StaticAppBar extends StatelessWidget {
       ),
     );
   }
+}
+
+class _ToggleLanguageButton extends StatelessWidget {
+  const _ToggleLanguageButton();
+
+  @override
+  Widget build(BuildContext context) => IconButton(
+        tooltip: S.of(context).key(Lk.toggleLanguage),
+        onPressed: () => TodoLocalizations.toggle(context),
+        icon: const Icon(Icons.language),
+      );
+}
+
+class _ToggleThemeButton extends StatelessWidget {
+  const _ToggleThemeButton();
+
+  @override
+  Widget build(BuildContext context) => IconButton(
+        tooltip: S.of(context).key(Lk.toggleTheme),
+        onPressed: () => TodoTheme.toggle(context),
+        icon: const Icon(CupertinoIcons.moon_circle),
+      );
 }

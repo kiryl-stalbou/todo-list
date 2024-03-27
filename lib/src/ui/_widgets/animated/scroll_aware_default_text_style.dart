@@ -23,6 +23,8 @@ class _ScrollAwareDefaultTextStyleState extends State<ScrollAwareDefaultTextStyl
 
   @override
   void onScrollNotification(ScrollNotification notification) {
+    if (notification is! ScrollUpdateNotification || notification.depth != 0) return;
+
     final oldShowText = _showText;
 
     _showText = notification.metrics.extentBefore >= widget.showTextScrollExtent;

@@ -7,7 +7,6 @@ import '../all_todos/all_todos_screen.dart';
 import '../completed_todos/completed_todos_screen.dart';
 import '../today_todos/today_todos_screen.dart';
 import '../user_profile/user_profile_screen.dart';
-import 'todo_tabs.dart';
 
 const tabsViews = <Widget>[
   AllTodosScreen(),
