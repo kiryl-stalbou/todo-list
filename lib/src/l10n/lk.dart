@@ -34,6 +34,7 @@ abstract final class Lk {
   static const String cancel = 'cancel';
   static const String require = 'require';
   static const String delete = 'delete';
+  static const String addDate = 'addDate';
   static const String search = 'search';
 
   static const String signin = 'signin';

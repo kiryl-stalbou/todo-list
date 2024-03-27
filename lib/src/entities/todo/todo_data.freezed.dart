@@ -21,11 +21,11 @@ TodoData _$TodoDataFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TodoData {
   @JsonKey()
-  String get title => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
   @JsonKey()
-  String get notes => throw _privateConstructorUsedError;
-  @TimestampSerializer()
-  DateTime get dateTime => throw _privateConstructorUsedError;
+  String? get notes => throw _privateConstructorUsedError;
+  @_TimestampSerializer()
+  DateTime? get dateTime => throw _privateConstructorUsedError;
   @JsonKey()
   bool get isCompleted => throw _privateConstructorUsedError;
 
@@ -38,7 +38,7 @@ class _$TodoDataImpl extends _TodoData {
   const _$TodoDataImpl(
       {@JsonKey() required this.title,
       @JsonKey() required this.notes,
-      @TimestampSerializer() required this.dateTime,
+      @_TimestampSerializer() required this.dateTime,
       @JsonKey() required this.isCompleted})
       : super._();
 
@@ -47,13 +47,13 @@ class _$TodoDataImpl extends _TodoData {
 
   @override
   @JsonKey()
-  final String title;
+  final String? title;
   @override
   @JsonKey()
-  final String notes;
+  final String? notes;
   @override
-  @TimestampSerializer()
-  final DateTime dateTime;
+  @_TimestampSerializer()
+  final DateTime? dateTime;
   @override
   @JsonKey()
   final bool isCompleted;
@@ -91,9 +91,9 @@ class _$TodoDataImpl extends _TodoData {
 
 abstract class _TodoData extends TodoData {
   const factory _TodoData(
-      {@JsonKey() required final String title,
-      @JsonKey() required final String notes,
-      @TimestampSerializer() required final DateTime dateTime,
+      {@JsonKey() required final String? title,
+      @JsonKey() required final String? notes,
+      @_TimestampSerializer() required final DateTime? dateTime,
       @JsonKey() required final bool isCompleted}) = _$TodoDataImpl;
   const _TodoData._() : super._();
 
@@ -102,13 +102,13 @@ abstract class _TodoData extends TodoData {
 
   @override
   @JsonKey()
-  String get title;
+  String? get title;
   @override
   @JsonKey()
-  String get notes;
+  String? get notes;
   @override
-  @TimestampSerializer()
-  DateTime get dateTime;
+  @_TimestampSerializer()
+  DateTime? get dateTime;
   @override
   @JsonKey()
   bool get isCompleted;
