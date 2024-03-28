@@ -20,13 +20,11 @@ TodoData _$TodoDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TodoData {
-  @JsonKey()
   String? get title => throw _privateConstructorUsedError;
   @JsonKey()
   String? get notes => throw _privateConstructorUsedError;
   @_TimestampSerializer()
   DateTime? get dateTime => throw _privateConstructorUsedError;
-  @JsonKey()
   bool get isCompleted => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,17 +34,16 @@ mixin _$TodoData {
 @JsonSerializable()
 class _$TodoDataImpl extends _TodoData {
   const _$TodoDataImpl(
-      {@JsonKey() required this.title,
+      {required this.title,
       @JsonKey() required this.notes,
       @_TimestampSerializer() required this.dateTime,
-      @JsonKey() required this.isCompleted})
+      required this.isCompleted})
       : super._();
 
   factory _$TodoDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$TodoDataImplFromJson(json);
 
   @override
-  @JsonKey()
   final String? title;
   @override
   @JsonKey()
@@ -55,7 +52,6 @@ class _$TodoDataImpl extends _TodoData {
   @_TimestampSerializer()
   final DateTime? dateTime;
   @override
-  @JsonKey()
   final bool isCompleted;
 
   @override
@@ -91,17 +87,16 @@ class _$TodoDataImpl extends _TodoData {
 
 abstract class _TodoData extends TodoData {
   const factory _TodoData(
-      {@JsonKey() required final String? title,
+      {required final String? title,
       @JsonKey() required final String? notes,
       @_TimestampSerializer() required final DateTime? dateTime,
-      @JsonKey() required final bool isCompleted}) = _$TodoDataImpl;
+      required final bool isCompleted}) = _$TodoDataImpl;
   const _TodoData._() : super._();
 
   factory _TodoData.fromJson(Map<String, dynamic> json) =
       _$TodoDataImpl.fromJson;
 
   @override
-  @JsonKey()
   String? get title;
   @override
   @JsonKey()
@@ -110,6 +105,5 @@ abstract class _TodoData extends TodoData {
   @_TimestampSerializer()
   DateTime? get dateTime;
   @override
-  @JsonKey()
   bool get isCompleted;
 }

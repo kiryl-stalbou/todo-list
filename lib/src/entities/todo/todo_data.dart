@@ -7,10 +7,10 @@ part 'todo_data.g.dart';
 @Freezed(fromJson: true, toJson: true)
 class TodoData with _$TodoData {
   const factory TodoData({
-    @JsonKey() required String? title,
+    required String? title,
     @JsonKey() required String? notes,
     @_TimestampSerializer() required DateTime? dateTime,
-    @JsonKey() required bool isCompleted,
+    required bool isCompleted,
   }) = _TodoData;
 
   const TodoData._();

@@ -20,11 +20,8 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserData {
-  @JsonKey()
   String get username => throw _privateConstructorUsedError;
-  @JsonKey()
   String get email => throw _privateConstructorUsedError;
-  @JsonKey()
   String get id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -34,22 +31,17 @@ mixin _$UserData {
 @JsonSerializable()
 class _$UserDataImpl extends _UserData {
   const _$UserDataImpl(
-      {@JsonKey() required this.username,
-      @JsonKey() required this.email,
-      @JsonKey() required this.id})
+      {required this.username, required this.email, required this.id})
       : super._();
 
   factory _$UserDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserDataImplFromJson(json);
 
   @override
-  @JsonKey()
   final String username;
   @override
-  @JsonKey()
   final String email;
   @override
-  @JsonKey()
   final String id;
 
   @override
@@ -82,21 +74,18 @@ class _$UserDataImpl extends _UserData {
 
 abstract class _UserData extends UserData {
   const factory _UserData(
-      {@JsonKey() required final String username,
-      @JsonKey() required final String email,
-      @JsonKey() required final String id}) = _$UserDataImpl;
+      {required final String username,
+      required final String email,
+      required final String id}) = _$UserDataImpl;
   const _UserData._() : super._();
 
   factory _UserData.fromJson(Map<String, dynamic> json) =
       _$UserDataImpl.fromJson;
 
   @override
-  @JsonKey()
   String get username;
   @override
-  @JsonKey()
   String get email;
   @override
-  @JsonKey()
   String get id;
 }
