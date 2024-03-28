@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-mixin FocusStateMixin<S extends StatefulWidget> on State<S> {
+mixin Focus1StateMixin<S extends StatefulWidget> on State<S> {
   late final FocusNode _focusNode = FocusNode(debugLabel: 'FocusStateMixin', canRequestFocus: canRequestFocus);
 
   bool get canRequestFocus => true;

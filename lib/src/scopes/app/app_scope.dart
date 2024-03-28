@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../ui/_init/scope_init_active_screen.dart';
-import '../../ui/_init/scope_init_failed_screen.dart';
+import '../../ui/_init/active/scope_init_active_screen.dart';
+import '../../ui/_init/failed/scope_init_failed_screen.dart';
 import 'app_scope_status.dart';
 import 'dependencies/app_scope_dependencies.dart';
 import 'dependencies/app_scope_dependencies_impl.dart';
@@ -34,7 +34,7 @@ class _AppScopeState extends State<AppScope> {
   AppScopeDependencies? _dependencies;
 
   void _resolveInitializer() {
-    _initializer = AppScopeDependenciesImpl.initializer();
+    setState(() => _initializer = AppScopeDependenciesImpl.initializer());
   }
 
   @override

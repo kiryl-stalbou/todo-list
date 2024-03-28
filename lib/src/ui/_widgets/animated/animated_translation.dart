@@ -71,7 +71,6 @@ class _AnimatedTranslationState extends AnimatedState<AnimatedTranslation> {
   @override
   Widget build(BuildContext context) {
     final offset = _offsetTween.evaluate(animationController);
-    //TODO: RECONSIDER ALL TRANSITIONS
 
     return RepaintBoundary(
       child: widget.fractional

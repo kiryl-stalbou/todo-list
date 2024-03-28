@@ -6,74 +6,105 @@ import '../../../constants/sizes.dart';
 import '../../../entities/todo/todo_data.dart';
 import '../../../l10n/lk.dart';
 import '../../../l10n/s.dart';
+import '../../../scopes/user/dependencies/todos/todos.dart';
+import '../../../utils/common/hide_scrollbar.dart';
 import '../../../utils/mixins/ensure_visible.dart';
 import '../../_widgets/common/spacers.dart';
 
-class TodoCard extends StatelessWidget {
-  const TodoCard({required this.todo, super.key});
+enum TodoCardMode { drag, delete }
 
+class TodoCard extends StatefulWidget {
+  const TodoCard({
+    required this.index,
+    required this.todo,
+    required this.mode,
+    super.key,
+  });
+
+  final int index;
   final TodoData todo;
+  final ValueNotifier<TodoCardMode?> mode;
 
   @override
-  Widget build(BuildContext context) => Material(
-        type: MaterialType.transparency,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            //
-            _CompleteToggle(todo),
+  State<TodoCard> createState() => _TodoCardState();
+}
 
-            Expanded(child: _InputFields(todo)),
+class _TodoCardState extends State<TodoCard> {
+  late final _isCompleted = ValueNotifier(widget.todo.isCompleted);
 
-            _ActionMenu(todo),
+  @override
+  Widget build(BuildContext context) => ScrollConfiguration(
+        behavior: const HideScrollbarBehavior(),
+        child: Material(
+          type: MaterialType.transparency,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              //
+              _CompleteToggle(widget.todo, _isCompleted),
 
-            // Makes sure that web scroll bar dont overlaps components
-            if (kIsWeb) const HSpacer(Insets.l),
-          ],
+              Expanded(child: _Info(widget.todo, _isCompleted)),
+
+              _ActionButton(widget.todo, widget.index, widget.mode),
+
+              // Makes sure that web scroll bar doesn't overlap components
+              if (kIsWeb) const HSpacer(Insets.l),
+            ],
+          ),
         ),
       );
 }
 
-class _CompleteToggle extends StatefulWidget {
-  const _CompleteToggle(this.todo);
+class _CompleteToggle extends StatelessWidget {
+  const _CompleteToggle(this.todo, this.isCompleted);
 
   final TodoData todo;
+  final ValueNotifier<bool> isCompleted;
 
-  @override
-  State<_CompleteToggle> createState() => _CompleteToggleState();
-}
-
-class _CompleteToggleState extends State<_CompleteToggle> {
-  late bool _isCompleted = widget.todo.isCompleted;
-
-  void _onChanged(bool? value) {
-    setState(() => _isCompleted = value ?? false);
+  void _onChanged(BuildContext context, bool? value) {
+    isCompleted.value = value ?? false;
     // ignore: discarded_futures
     HapticFeedback.selectionClick();
+
+    // Todos.of(context).update(todo, todo.copyWith(isCompleted: true), debounce: true);
   }
 
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: Insets.xs),
-        child: Checkbox(value: _isCompleted, onChanged: _onChanged),
+        child: Transform.scale(
+          scale: 1.2,
+          child: ListenableBuilder(
+            listenable: isCompleted,
+            builder: (_, __) => Checkbox(
+              value: isCompleted.value,
+              onChanged: (value) => _onChanged(context, value),
+            ),
+          ),
+        ),
       );
 }
 
-class _InputFields extends StatefulWidget {
-  const _InputFields(this.todo);
+class _Info extends StatefulWidget {
+  const _Info(this.todo, this.isCompleted);
 
   final TodoData todo;
+  final ValueNotifier<bool> isCompleted;
 
   @override
-  State<_InputFields> createState() => _InputFieldsState();
+  State<_Info> createState() => _InfoState();
 }
 
-class _InputFieldsState extends State<_InputFields> with AutomaticKeepAliveClientMixin {
+class _InfoState extends State<_Info> with AutomaticKeepAliveClientMixin {
   late final _titleController = TextEditingController(text: widget.todo.title);
   late final _notesController = TextEditingController(text: widget.todo.title);
 
-  void _onChanged(String text) {}
+  void _onChanged(String text) => Todos.of(context).update(
+        widget.todo,
+        widget.todo.copyWith(title: _titleController.text, notes: _notesController.text),
+        debounce: true,
+      );
 
   @override
   bool get wantKeepAlive => true;
@@ -87,6 +118,7 @@ class _InputFieldsState extends State<_InputFields> with AutomaticKeepAliveClien
     final s = S.of(context);
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -125,56 +157,118 @@ class _InputFieldsState extends State<_InputFields> with AutomaticKeepAliveClien
 
         const VSpacer(Insets.s),
 
+        _DatePicker(widget.todo),
+
+        const VSpacer(Insets.s),
+
         const Divider(thickness: Strokes.thin, height: 0),
       ],
     );
   }
 }
 
-class _ActionMenu extends StatelessWidget {
-  const _ActionMenu(this.todo);
+class _DatePicker extends StatelessWidget {
+  const _DatePicker(this.todo);
 
   final TodoData todo;
+
+  Future<void> _pickDate(BuildContext context) async {
+    final dateTime = await showDatePicker(
+      context: context,
+      firstDate: DateTime.parse('2024-00-00'),
+      lastDate: DateTime.parse('9999-00-00'),
+    );
+
+    if (dateTime == null || !context.mounted) return;
+
+    Todos.of(context).update(todo, todo.copyWith(dateTime: dateTime));
+  }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final dateTime = todo.dateTime;
     final s = S.of(context);
 
-    return PopupMenuButton<void>(
-      icon: const Icon(Icons.more_vert),
-      itemBuilder: (_) => <PopupMenuEntry<void>>[
-        PopupMenuItem(
-          onTap: () => showDatePicker(
-            context: context,
-            firstDate: DateTime.parse('2024-00-00'),
-            lastDate: DateTime.parse('9999-00-00'),
-          ),
-          child: Row(
-            children: [
-              const Icon(Icons.visibility_outlined),
-              const HSpacer(Insets.xs),
-              Text(
-                s.key(Lk.addDate),
-                style: textTheme.bodyMedium,
-              ),
-            ],
-          ),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () async => _pickDate(context),
+        child: Text(
+          dateTime == null ? s.key(Lk.pickDateTime) : '${dateTime.day}.${dateTime.month}.${dateTime.year % 100}',
+          style: textTheme.labelMedium?.copyWith(color: colorScheme.secondary),
         ),
-        PopupMenuItem(
-          child: Row(
-            children: [
-              Icon(Icons.delete_outline, color: colorScheme.error),
-              const HSpacer(Insets.xs),
-              Text(
-                s.key(Lk.delete),
-                style: textTheme.bodyMedium?.copyWith(color: colorScheme.error),
-              ),
-            ],
-          ),
-        ),
-      ],
+      ),
     );
+  }
+}
+
+class _ActionButton extends StatelessWidget {
+  const _ActionButton(this.todo, this.index, this.mode);
+
+  final int index;
+  final TodoData todo;
+  final ValueNotifier<TodoCardMode?> mode;
+
+  void _onDeleteTap(BuildContext context) => Todos.of(context).delete(todo);
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return ListenableBuilder(
+      listenable: mode,
+      builder: (_, __) {
+        final value = mode.value;
+
+        if (value == null) return const SizedBox.shrink();
+
+        return switch (value) {
+          TodoCardMode.drag => ReorderableDragStartListener(
+              index: index,
+              child: const Icon(Icons.drag_handle_rounded),
+            ),
+          TodoCardMode.delete => IconButton(
+              icon: Icon(Icons.delete_outline_rounded, color: colorScheme.error),
+              onPressed: () => _onDeleteTap(context),
+              color: colorScheme.error,
+            ),
+        };
+      },
+    );
+
+    // return PopupMenuButton<void>(
+    //   icon: const Icon(Icons.more_vert),
+    //   itemBuilder: (_) => <PopupMenuEntry<void>>[
+    //     PopupMenuItem(
+    //       onTap: () async => _pickDate(context),
+    //       child: Row(
+    //         children: [
+    //           const Icon(Icons.visibility_outlined),
+    //           const HSpacer(Insets.xs),
+    //           Text(
+    //             s.key(Lk.addDate),
+    //             style: textTheme.bodyMedium,
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //     PopupMenuItem(
+    //       onTap: () => _onDeleteTap(context),
+    //       child: Row(
+    //         children: [
+    //           Icon(Icons.delete_outline, color: colorScheme.error),
+    //           const HSpacer(Insets.xs),
+    //           Text(
+    //             s.key(Lk.delete),
+    //             style: textTheme.bodyMedium?.copyWith(color: colorScheme.error),
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //   ],
+    // );
   }
 }

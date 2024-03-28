@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../entities/user/user_data.dart';
-import '../../ui/_init/scope_init_active_screen.dart';
-import '../../ui/_init/scope_init_failed_screen.dart';
+import '../../ui/_init/active/scope_init_active_screen.dart';
+import '../../ui/_init/failed/scope_init_failed_screen.dart';
 import 'dependencies/user_scope_dependencies.dart';
 import 'dependencies/user_scope_dependencies_impl.dart';
 import 'dependencies/user_scope_dependencies_tree.dart';
@@ -36,7 +36,7 @@ class _UserScopeState extends State<UserScope> {
   UserScopeDependencies? _dependencies;
 
   void _resolveInitializer() {
-    _initializer = UserScopeDependenciesImpl.initializer(widget.user);
+    setState(() => _initializer = UserScopeDependenciesImpl.initializer(widget.user));
   }
 
   @override

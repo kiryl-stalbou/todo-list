@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../_widgets/common/paddings.dart';
 
-class TabTitle extends StatelessWidget {
-  const TabTitle(this.data, {super.key});
+class TodosTitle extends StatelessWidget {
+  const TodosTitle(this.data, {super.key});
 
   final String data;
 

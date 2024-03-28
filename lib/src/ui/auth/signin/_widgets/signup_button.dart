@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../constants/colors.dart';
 import '../../../../l10n/lk.dart';
 import '../../../../l10n/s.dart';
 
@@ -12,6 +11,7 @@ class SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
     final s = S.of(context);
 
     return TextButton(
@@ -19,7 +19,7 @@ class SignUpButton extends StatelessWidget {
       child: Text(
         s.key(Lk.signinDontHaveAcc),
         style: textTheme.bodySmall?.copyWith(
-          color: AppColors.blue,
+          color: colorScheme.secondary,
         ),
       ),
     );

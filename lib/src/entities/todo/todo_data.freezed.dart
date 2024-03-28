@@ -21,13 +21,118 @@ TodoData _$TodoDataFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TodoData {
   String? get title => throw _privateConstructorUsedError;
-  @JsonKey()
   String? get notes => throw _privateConstructorUsedError;
   @_TimestampSerializer()
   DateTime? get dateTime => throw _privateConstructorUsedError;
   bool get isCompleted => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $TodoDataCopyWith<TodoData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TodoDataCopyWith<$Res> {
+  factory $TodoDataCopyWith(TodoData value, $Res Function(TodoData) then) =
+      _$TodoDataCopyWithImpl<$Res, TodoData>;
+  @useResult
+  $Res call(
+      {String? title,
+      String? notes,
+      @_TimestampSerializer() DateTime? dateTime,
+      bool isCompleted});
+}
+
+/// @nodoc
+class _$TodoDataCopyWithImpl<$Res, $Val extends TodoData>
+    implements $TodoDataCopyWith<$Res> {
+  _$TodoDataCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = freezed,
+    Object? notes = freezed,
+    Object? dateTime = freezed,
+    Object? isCompleted = null,
+  }) {
+    return _then(_value.copyWith(
+      title: freezed == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      notes: freezed == notes
+          ? _value.notes
+          : notes // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dateTime: freezed == dateTime
+          ? _value.dateTime
+          : dateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      isCompleted: null == isCompleted
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$TodoDataImplCopyWith<$Res>
+    implements $TodoDataCopyWith<$Res> {
+  factory _$$TodoDataImplCopyWith(
+          _$TodoDataImpl value, $Res Function(_$TodoDataImpl) then) =
+      __$$TodoDataImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String? title,
+      String? notes,
+      @_TimestampSerializer() DateTime? dateTime,
+      bool isCompleted});
+}
+
+/// @nodoc
+class __$$TodoDataImplCopyWithImpl<$Res>
+    extends _$TodoDataCopyWithImpl<$Res, _$TodoDataImpl>
+    implements _$$TodoDataImplCopyWith<$Res> {
+  __$$TodoDataImplCopyWithImpl(
+      _$TodoDataImpl _value, $Res Function(_$TodoDataImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = freezed,
+    Object? notes = freezed,
+    Object? dateTime = freezed,
+    Object? isCompleted = null,
+  }) {
+    return _then(_$TodoDataImpl(
+      title: freezed == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      notes: freezed == notes
+          ? _value.notes
+          : notes // ignore: cast_nullable_to_non_nullable
+              as String?,
+      dateTime: freezed == dateTime
+          ? _value.dateTime
+          : dateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      isCompleted: null == isCompleted
+          ? _value.isCompleted
+          : isCompleted // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
@@ -35,7 +140,7 @@ mixin _$TodoData {
 class _$TodoDataImpl extends _TodoData {
   const _$TodoDataImpl(
       {required this.title,
-      @JsonKey() required this.notes,
+      required this.notes,
       @_TimestampSerializer() required this.dateTime,
       required this.isCompleted})
       : super._();
@@ -46,7 +151,6 @@ class _$TodoDataImpl extends _TodoData {
   @override
   final String? title;
   @override
-  @JsonKey()
   final String? notes;
   @override
   @_TimestampSerializer()
@@ -77,6 +181,12 @@ class _$TodoDataImpl extends _TodoData {
   int get hashCode =>
       Object.hash(runtimeType, title, notes, dateTime, isCompleted);
 
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TodoDataImplCopyWith<_$TodoDataImpl> get copyWith =>
+      __$$TodoDataImplCopyWithImpl<_$TodoDataImpl>(this, _$identity);
+
   @override
   Map<String, dynamic> toJson() {
     return _$$TodoDataImplToJson(
@@ -88,7 +198,7 @@ class _$TodoDataImpl extends _TodoData {
 abstract class _TodoData extends TodoData {
   const factory _TodoData(
       {required final String? title,
-      @JsonKey() required final String? notes,
+      required final String? notes,
       @_TimestampSerializer() required final DateTime? dateTime,
       required final bool isCompleted}) = _$TodoDataImpl;
   const _TodoData._() : super._();
@@ -99,11 +209,14 @@ abstract class _TodoData extends TodoData {
   @override
   String? get title;
   @override
-  @JsonKey()
   String? get notes;
   @override
   @_TimestampSerializer()
   DateTime? get dateTime;
   @override
   bool get isCompleted;
+  @override
+  @JsonKey(ignore: true)
+  _$$TodoDataImplCopyWith<_$TodoDataImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

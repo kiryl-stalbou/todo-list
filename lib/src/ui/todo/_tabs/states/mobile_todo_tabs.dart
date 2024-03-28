@@ -5,6 +5,7 @@ import '../../../../constants/durations.dart';
 import '../../../../l10n/lk.dart';
 import '../../../../utils/mixins/localization_state_mixin.dart';
 import '../../../_widgets/scaffolds/scroll_aware_scaffold.dart';
+import '../../_widgets/today_todos_badge.dart';
 import '../tabs_controller.dart';
 
 class MobileTodoTabs extends StatefulWidget {
@@ -36,8 +37,8 @@ class _MobileTodoTabsState extends State<MobileTodoTabs> with LocalizationStateM
                 label: s.key(Lk.completed),
               ),
               NavigationDestination(
-                icon: const Icon(Icons.today_outlined),
-                selectedIcon: const Icon(Icons.today_rounded),
+                icon: const TodayTodosBadge(child: Icon(Icons.today_outlined)),
+                selectedIcon: const TodayTodosBadge(child: Icon(Icons.today_rounded)),
                 label: s.key(Lk.today),
               ),
               NavigationDestination(

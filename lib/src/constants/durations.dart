@@ -2,6 +2,7 @@
 
 abstract final class AppDurations {
   static const Duration _0ms = Duration.zero;
+  static const Duration _100ms = Duration(milliseconds: 100);
   static const Duration _300ms = Duration(milliseconds: 300);
   static const Duration _400ms = Duration(milliseconds: 400);
   static const Duration _800ms = Duration(milliseconds: 800);
@@ -10,6 +11,9 @@ abstract final class AppDurations {
 
   /// _0ms
   static const Duration zero = _0ms;
+
+  /// _150ms
+  static const Duration fastSlide = _100ms;
 
   /// _300ms
   static const Duration animatedListChanged = _300ms;
@@ -44,10 +48,10 @@ abstract final class AppDurations {
   /// 1000ms
   static const Duration autoScroll = _1000ms;
 
-  /// 1200ms
+  /// 1000ms
   static const Duration minAppScopeInitDelay = _1000ms;
 
-  /// 1200ms
+  /// 1000ms
   static const Duration minUserScopeInitDelay = _1000ms;
 
   /// 1800ms

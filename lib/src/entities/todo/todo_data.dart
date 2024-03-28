@@ -4,11 +4,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'todo_data.freezed.dart';
 part 'todo_data.g.dart';
 
-@Freezed(fromJson: true, toJson: true)
+@Freezed(fromJson: true, toJson: true, copyWith: true)
 class TodoData with _$TodoData {
   const factory TodoData({
     required String? title,
-    @JsonKey() required String? notes,
+    required String? notes,
     @_TimestampSerializer() required DateTime? dateTime,
     required bool isCompleted,
   }) = _TodoData;

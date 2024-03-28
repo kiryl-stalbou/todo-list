@@ -48,7 +48,7 @@ class AppTextField extends StatefulWidget {
   State<AppTextField> createState() => _AppTextFieldState();
 }
 
-class _AppTextFieldState extends State<AppTextField> with ThemeStateMixin, FocusStateMixin {
+class _AppTextFieldState extends State<AppTextField> with ThemeStateMixin, Focus1StateMixin {
   late final _effectiveController = widget.controller ?? TextEditingController();
 
   @override

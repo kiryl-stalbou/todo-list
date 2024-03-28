@@ -1,23 +1,25 @@
+import 'package:rxdart/rxdart.dart';
+
 import '../../../../../entities/todo/todo_data.dart';
 
-abstract interface class TodoService {
+abstract interface class TodosService {
   Future<void> init();
 
   Future<void> dispose();
 
   void create(TodoData todo);
 
-  void update(TodoData todo);
+  void update(TodoData oldTodo, TodoData newTodo, int? newIndex);
 
   void delete(TodoData todo);
 
   void sort<T>(TodosSortComparator<T> comparator);
 
-  Stream<List<TodoData>> get allTodosStream;
+  ValueStream<List<TodoData>> get allTodosStream;
 
-  Stream<List<TodoData>> get todayTodosStream;
+  ValueStream<List<TodoData>> get todayTodosStream;
 
-  Stream<List<TodoData>> get completedTodosStream;
+  ValueStream<List<TodoData>> get completedTodosStream;
 }
 
 sealed class TodosSortComparator<T> {

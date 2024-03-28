@@ -81,7 +81,6 @@ class _WidgetsApp extends StatelessWidget {
           canRequestFocus: false,
           onKeyEvent: _onKeyEvent,
           child: Shortcuts(
-            debugLabel: '<Default WidgetsApp Shortcuts>',
             shortcuts: WidgetsApp.defaultShortcuts,
             child: DefaultTextEditingShortcuts(
               child: Actions(

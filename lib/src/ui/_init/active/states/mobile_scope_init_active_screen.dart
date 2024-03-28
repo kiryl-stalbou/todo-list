@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../theme.dart';
-import '../../constants/sizes.dart';
-import '../../utils/mixins/theme_state_mixin.dart';
-import '../_widgets/common/paddings.dart';
+import '../../../../../theme.dart';
+import '../../../../constants/sizes.dart';
+import '../../../../utils/mixins/theme_state_mixin.dart';
+import '../../../_widgets/common/paddings.dart';
 
-class ScopeInitActiveScreen extends StatefulWidget {
-  const ScopeInitActiveScreen({super.key});
+class MobileScopeInitActiveScreen extends StatefulWidget {
+  const MobileScopeInitActiveScreen({super.key});
 
   @override
-  State<ScopeInitActiveScreen> createState() => _ScopeInitActiveScreenState();
+  State<MobileScopeInitActiveScreen> createState() => _MobileScopeInitActiveScreenState();
 }
 
-class _ScopeInitActiveScreenState extends State<ScopeInitActiveScreen> with ThemeStateMixin {
+class _MobileScopeInitActiveScreenState extends State<MobileScopeInitActiveScreen> with ThemeStateMixin {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
