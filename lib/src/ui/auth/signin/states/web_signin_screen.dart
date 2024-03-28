@@ -29,31 +29,35 @@ class _WebSignInScreenState extends State<WebSignInScreen> with SignInController
   Widget build(BuildContext context) => AppScaffold(
         top: const StaticAppBar(),
         body: HideKeyboardArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
+          child: ListView(
             children: [
               //
-              const SignInTitle(),
+              const VSpacer(Insets.xxl),
+
+              const Center(child: SignInTitle()),
 
               const VSpacer(Insets.l),
 
-              DesktopConstraints(
-                child: SignInForm(
-                  formKey: formKey,
-                  emailController: emailController,
-                  passwordController: passwordController,
+              Center(
+                child: DesktopConstraints(
+                  child: SignInForm(
+                    formKey: formKey,
+                    emailController: emailController,
+                    passwordController: passwordController,
+                  ),
                 ),
               ),
 
               const VSpacer(Insets.xl),
 
-              SignUpButton(onSignUpTap),
+              Center(child: SignUpButton(onSignUpTap)),
 
               const VSpacer(Insets.xxxl),
 
-              DesktopConstraints(
-                child: _SignInButton(onSignInTap),
+              Center(
+                child: DesktopConstraints(
+                  child: _SignInButton(onSignInTap),
+                ),
               ),
             ],
           ),
