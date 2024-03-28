@@ -7,9 +7,10 @@ part 'todo_data.g.dart';
 @Freezed(fromJson: true, toJson: true, copyWith: true)
 class TodoData with _$TodoData {
   const factory TodoData({
+    required String id,
     required String? title,
     required String? notes,
-    @_TimestampSerializer() required DateTime? dateTime,
+    @_TimestampSerializer() required DateTime? date,
     required bool isCompleted,
   }) = _TodoData;
 

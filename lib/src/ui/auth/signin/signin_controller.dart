@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../../l10n/lk.dart';
@@ -12,8 +13,8 @@ mixin SignInControllerMixin<S extends StatefulWidget> on State<S> {
   late final GlobalLoadingState _globalLoadingState;
   late final AuthState _authState;
 
-  late final passwordController = TextEditingController();
-  late final emailController = TextEditingController();
+  late final emailController = TextEditingController(text: kDebugMode ? 'kirillstolbov7719@icloud.com' : null);
+  late final passwordController = TextEditingController(text: kDebugMode ? 'hockey72' : null);
   final formKey = GlobalKey<ValidatableFormState>();
 
   Future<void> onSignInTap() async {

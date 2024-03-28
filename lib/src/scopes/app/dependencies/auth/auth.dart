@@ -28,8 +28,6 @@ class Auth extends StatefulWidget {
 class AuthState extends State<Auth> {
   late final AuthService _service = AppScope.dependenciesOf(context).authService;
 
-  final showSignUpScreen = ValueNotifier(false);
-
   EitherFuture<void> signIn(String email, String password) => tryCatchEither(
         fn: () => _service.signIn(email, password),
       );

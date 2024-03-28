@@ -9,29 +9,15 @@ abstract interface class TodosService {
 
   void create(TodoData todo);
 
-  void update(TodoData oldTodo, TodoData newTodo, int? newIndex);
+  void update(TodoData oldTodo, TodoData newTodo);
+
+  void move(TodoData from, TodoData to);
 
   void delete(TodoData todo);
-
-  void sort<T>(TodosSortComparator<T> comparator);
 
   ValueStream<List<TodoData>> get allTodosStream;
 
   ValueStream<List<TodoData>> get todayTodosStream;
 
   ValueStream<List<TodoData>> get completedTodosStream;
-}
-
-sealed class TodosSortComparator<T> {
-  const TodosSortComparator(this.comparator);
-
-  final Comparator<T> comparator;
-}
-
-final class TodayTodosSortComparator<T> extends TodosSortComparator<T> {
-  TodayTodosSortComparator(super.comparator);
-}
-
-final class CompletedTodosSortComparator<T> extends TodosSortComparator<T> {
-  CompletedTodosSortComparator(super.comparator);
 }

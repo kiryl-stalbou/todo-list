@@ -94,7 +94,10 @@ class _WidgetsApp extends StatelessWidget {
                       child: UncaughtErrors(
                         controller: uncaughtErrorsController,
                         child: GlobalLoading(
-                          child: child,
+                          child: Material(
+                            type: MaterialType.transparency,
+                            child: child,
+                          ),
                         ),
                       ),
                     ),

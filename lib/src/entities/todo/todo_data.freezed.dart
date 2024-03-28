@@ -20,10 +20,11 @@ TodoData _$TodoDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TodoData {
+  String get id => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   String? get notes => throw _privateConstructorUsedError;
   @_TimestampSerializer()
-  DateTime? get dateTime => throw _privateConstructorUsedError;
+  DateTime? get date => throw _privateConstructorUsedError;
   bool get isCompleted => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,9 +39,10 @@ abstract class $TodoDataCopyWith<$Res> {
       _$TodoDataCopyWithImpl<$Res, TodoData>;
   @useResult
   $Res call(
-      {String? title,
+      {String id,
+      String? title,
       String? notes,
-      @_TimestampSerializer() DateTime? dateTime,
+      @_TimestampSerializer() DateTime? date,
       bool isCompleted});
 }
 
@@ -57,12 +59,17 @@ class _$TodoDataCopyWithImpl<$Res, $Val extends TodoData>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? title = freezed,
     Object? notes = freezed,
-    Object? dateTime = freezed,
+    Object? date = freezed,
     Object? isCompleted = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -71,9 +78,9 @@ class _$TodoDataCopyWithImpl<$Res, $Val extends TodoData>
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String?,
-      dateTime: freezed == dateTime
-          ? _value.dateTime
-          : dateTime // ignore: cast_nullable_to_non_nullable
+      date: freezed == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       isCompleted: null == isCompleted
           ? _value.isCompleted
@@ -92,9 +99,10 @@ abstract class _$$TodoDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? title,
+      {String id,
+      String? title,
       String? notes,
-      @_TimestampSerializer() DateTime? dateTime,
+      @_TimestampSerializer() DateTime? date,
       bool isCompleted});
 }
 
@@ -109,12 +117,17 @@ class __$$TodoDataImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? title = freezed,
     Object? notes = freezed,
-    Object? dateTime = freezed,
+    Object? date = freezed,
     Object? isCompleted = null,
   }) {
     return _then(_$TodoDataImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -123,9 +136,9 @@ class __$$TodoDataImplCopyWithImpl<$Res>
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String?,
-      dateTime: freezed == dateTime
-          ? _value.dateTime
-          : dateTime // ignore: cast_nullable_to_non_nullable
+      date: freezed == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
               as DateTime?,
       isCompleted: null == isCompleted
           ? _value.isCompleted
@@ -139,9 +152,10 @@ class __$$TodoDataImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TodoDataImpl extends _TodoData {
   const _$TodoDataImpl(
-      {required this.title,
+      {required this.id,
+      required this.title,
       required this.notes,
-      @_TimestampSerializer() required this.dateTime,
+      @_TimestampSerializer() required this.date,
       required this.isCompleted})
       : super._();
 
@@ -149,18 +163,20 @@ class _$TodoDataImpl extends _TodoData {
       _$$TodoDataImplFromJson(json);
 
   @override
+  final String id;
+  @override
   final String? title;
   @override
   final String? notes;
   @override
   @_TimestampSerializer()
-  final DateTime? dateTime;
+  final DateTime? date;
   @override
   final bool isCompleted;
 
   @override
   String toString() {
-    return 'TodoData(title: $title, notes: $notes, dateTime: $dateTime, isCompleted: $isCompleted)';
+    return 'TodoData(id: $id, title: $title, notes: $notes, date: $date, isCompleted: $isCompleted)';
   }
 
   @override
@@ -168,10 +184,10 @@ class _$TodoDataImpl extends _TodoData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TodoDataImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.notes, notes) || other.notes == notes) &&
-            (identical(other.dateTime, dateTime) ||
-                other.dateTime == dateTime) &&
+            (identical(other.date, date) || other.date == date) &&
             (identical(other.isCompleted, isCompleted) ||
                 other.isCompleted == isCompleted));
   }
@@ -179,7 +195,7 @@ class _$TodoDataImpl extends _TodoData {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, title, notes, dateTime, isCompleted);
+      Object.hash(runtimeType, id, title, notes, date, isCompleted);
 
   @JsonKey(ignore: true)
   @override
@@ -197,9 +213,10 @@ class _$TodoDataImpl extends _TodoData {
 
 abstract class _TodoData extends TodoData {
   const factory _TodoData(
-      {required final String? title,
+      {required final String id,
+      required final String? title,
       required final String? notes,
-      @_TimestampSerializer() required final DateTime? dateTime,
+      @_TimestampSerializer() required final DateTime? date,
       required final bool isCompleted}) = _$TodoDataImpl;
   const _TodoData._() : super._();
 
@@ -207,12 +224,14 @@ abstract class _TodoData extends TodoData {
       _$TodoDataImpl.fromJson;
 
   @override
+  String get id;
+  @override
   String? get title;
   @override
   String? get notes;
   @override
   @_TimestampSerializer()
-  DateTime? get dateTime;
+  DateTime? get date;
   @override
   bool get isCompleted;
   @override

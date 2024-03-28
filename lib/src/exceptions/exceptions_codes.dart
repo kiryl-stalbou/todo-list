@@ -22,5 +22,5 @@ abstract final class ExceptionsCodes {
   static const String firInvalidEmail = 'invalid-email';
 
   /// * Thrown if the password is not strong enough.
-  static const String firWeakPassword = 'weak-password:';
+  static const String firWeakPassword = 'weak-password';
 }

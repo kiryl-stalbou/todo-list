@@ -18,7 +18,7 @@ class TodoRouterDelegate extends RouterDelegate<TodoConfiguration> with ChangeNo
 
   @override
   void dispose() {
-    selectedTab.addListener(notifyListeners);
+    selectedTab.dispose();
     super.dispose();
   }
 

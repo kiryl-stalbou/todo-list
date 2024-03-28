@@ -2,13 +2,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../constants/curves.dart';
+import '../../../constants/durations.dart';
 import '../../../constants/sizes.dart';
 import '../../../entities/todo/todo_data.dart';
 import '../../../l10n/lk.dart';
 import '../../../l10n/s.dart';
 import '../../../scopes/user/dependencies/todos/todos.dart';
+import '../../../utils/common/debouncer.dart';
 import '../../../utils/common/hide_scrollbar.dart';
+import '../../../utils/common/pick_date.dart';
 import '../../../utils/mixins/ensure_visible.dart';
+import '../../../utils/mixins/localization_state_mixin.dart';
+import '../../../utils/mixins/theme_state_mixin.dart';
 import '../../_widgets/common/spacers.dart';
 
 enum TodoCardMode { drag, delete }
@@ -30,165 +36,172 @@ class TodoCard extends StatefulWidget {
 }
 
 class _TodoCardState extends State<TodoCard> {
-  late final _isCompleted = ValueNotifier(widget.todo.isCompleted);
+  late final _d = Debouncer(duration: const Duration(milliseconds: 500));
+  late bool _isCompleted = widget.todo.isCompleted;
+
+  void _onCompletedChanged(bool value) {
+    setState(() => _isCompleted = value);
+    _d.run(() {
+      if (!mounted) return;
+      Todos.of(context).update(
+        widget.todo,
+        widget.todo.copyWith(isCompleted: value),
+      );
+    });
+    // ignore: discarded_futures
+    HapticFeedback.selectionClick();
+  }
 
   @override
-  Widget build(BuildContext context) => ScrollConfiguration(
-        behavior: const HideScrollbarBehavior(),
-        child: Material(
-          type: MaterialType.transparency,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              //
-              _CompleteToggle(widget.todo, _isCompleted),
+  Widget build(BuildContext context) => Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          //
+          _CompleteToggle(_onCompletedChanged, _isCompleted),
 
-              Expanded(child: _Info(widget.todo, _isCompleted)),
+          Expanded(child: _Info(widget.todo, _isCompleted)),
 
-              _ActionButton(widget.todo, widget.index, widget.mode),
+          _ActionButton(widget.todo, widget.index, widget.mode),
 
-              // Makes sure that web scroll bar doesn't overlap components
-              if (kIsWeb) const HSpacer(Insets.l),
-            ],
-          ),
-        ),
+          // Makes sure that web scroll bar doesn't overlap components
+          if (kIsWeb) const HSpacer(Insets.l),
+        ],
       );
 }
 
 class _CompleteToggle extends StatelessWidget {
-  const _CompleteToggle(this.todo, this.isCompleted);
+  const _CompleteToggle(this.onChanged, this.isCompleted);
 
-  final TodoData todo;
-  final ValueNotifier<bool> isCompleted;
-
-  void _onChanged(BuildContext context, bool? value) {
-    isCompleted.value = value ?? false;
-    // ignore: discarded_futures
-    HapticFeedback.selectionClick();
-
-    // Todos.of(context).update(todo, todo.copyWith(isCompleted: true), debounce: true);
-  }
+  final void Function(bool) onChanged;
+  final bool isCompleted;
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: Insets.xs),
-        child: Transform.scale(
-          scale: 1.2,
-          child: ListenableBuilder(
-            listenable: isCompleted,
-            builder: (_, __) => Checkbox(
-              value: isCompleted.value,
-              onChanged: (value) => _onChanged(context, value),
-            ),
-          ),
-        ),
-      );
+  Widget build(BuildContext context) {
+    Widget checkbox = Checkbox(
+      value: isCompleted,
+      onChanged: (value) => onChanged(value ?? false),
+    );
+
+    if (!kIsWeb) checkbox = Transform.scale(scale: 1.25, child: checkbox);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Insets.xs),
+      child: checkbox,
+    );
+  }
 }
 
 class _Info extends StatefulWidget {
   const _Info(this.todo, this.isCompleted);
 
   final TodoData todo;
-  final ValueNotifier<bool> isCompleted;
+  final bool isCompleted;
 
   @override
   State<_Info> createState() => _InfoState();
 }
 
-class _InfoState extends State<_Info> with AutomaticKeepAliveClientMixin {
+class _InfoState extends State<_Info> with ThemeStateMixin, LocalizationStateMixin {
   late final _titleController = TextEditingController(text: widget.todo.title);
-  late final _notesController = TextEditingController(text: widget.todo.title);
+  late final _notesController = TextEditingController(text: widget.todo.notes);
+  late final _d = Debouncer(duration: const Duration(milliseconds: 300));
 
-  void _onChanged(String text) => Todos.of(context).update(
-        widget.todo,
-        widget.todo.copyWith(title: _titleController.text, notes: _notesController.text),
-        debounce: true,
-      );
+  void _onChanged(String text) => _d.run(() {
+        if (!mounted) return;
+        Todos.of(context).update(
+          widget.todo,
+          widget.todo.copyWith(
+            title: _titleController.text,
+            notes: _notesController.text,
+          ),
+        );
+      });
 
   @override
-  bool get wantKeepAlive => true;
+  void didUpdateWidget(covariant _Info oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.todo != widget.todo) {
+      _titleController.text = widget.todo.title ?? '';
+      _notesController.text = widget.todo.notes ?? '';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    final f = widget.isCompleted ? -0.3 : 0.0;
+    final style = textTheme.labelMedium?.copyWith(height: 1);
+    final titleColor = colorScheme.onSurface.withOpacity(1 + f);
+    final notesColor = colorScheme.onSurface.withOpacity(0.6 + f);
+    final dateColor = colorScheme.secondary.withOpacity(1 + f);
 
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    final s = S.of(context);
+    return ScrollConfiguration(
+      behavior: const HideScrollbarBehavior(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          //
+          const VSpacer(kIsWeb ? Insets.l : Insets.s),
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        //
-        const VSpacer(Insets.xs),
-
-        TextField(
-          minLines: 1,
-          maxLines: 3,
-          onChanged: _onChanged,
-          controller: _titleController,
-          keyboardType: TextInputType.multiline,
-          onTap: () async => ensureTextFieldVisible(context),
-          decoration: InputDecoration.collapsed(
-            hintText: s.key(Lk.title),
-            hintStyle: textTheme.labelMedium?.copyWith(color: colorScheme.tertiary),
+          TextField(
+            maxLines: null,
+            style: style?.copyWith(color: titleColor),
+            onChanged: _onChanged,
+            controller: _titleController,
+            keyboardType: TextInputType.multiline,
+            onTap: () async => ensureTextFieldVisible(context),
+            decoration: InputDecoration.collapsed(
+              hintText: s.key(Lk.title),
+              hintStyle: style?.copyWith(color: titleColor),
+            ),
           ),
-          style: textTheme.labelLarge?.copyWith(fontWeight: FontWeight.w500),
-        ),
 
-        const VSpacer(Insets.s),
+          const VSpacer(kIsWeb ? Insets.m : Insets.xs),
 
-        TextField(
-          minLines: 1,
-          maxLines: 6,
-          onChanged: _onChanged,
-          controller: _notesController,
-          keyboardType: TextInputType.multiline,
-          onTap: () async => ensureTextFieldVisible(context),
-          decoration: InputDecoration.collapsed(
-            hintText: s.key(Lk.notes),
-            hintStyle: textTheme.labelMedium?.copyWith(color: colorScheme.tertiary),
+          TextField(
+            minLines: 1,
+            maxLines: 10,
+            onChanged: _onChanged,
+            controller: _notesController,
+            keyboardType: TextInputType.multiline,
+            style: style?.copyWith(color: notesColor),
+            onTap: () async => ensureTextFieldVisible(context),
+            decoration: InputDecoration.collapsed(
+              hintStyle: style?.copyWith(color: notesColor),
+              hintText: s.key(Lk.notes),
+            ),
           ),
-          style: textTheme.labelMedium?.copyWith(color: colorScheme.onSurface.withOpacity(0.8)),
-        ),
 
-        const VSpacer(Insets.s),
+          const VSpacer(kIsWeb ? Insets.s : Insets.xs),
 
-        _DatePicker(widget.todo),
+          _DatePicker(widget.todo, style?.copyWith(color: dateColor)),
 
-        const VSpacer(Insets.s),
+          const VSpacer(kIsWeb ? Insets.m : Insets.s),
 
-        const Divider(thickness: Strokes.thin, height: 0),
-      ],
+          const Divider(thickness: Strokes.thin, height: 0),
+        ],
+      ),
     );
   }
 }
 
 class _DatePicker extends StatelessWidget {
-  const _DatePicker(this.todo);
+  const _DatePicker(this.todo, this.style);
 
   final TodoData todo;
+  final TextStyle? style;
 
   Future<void> _pickDate(BuildContext context) async {
-    final dateTime = await showDatePicker(
-      context: context,
-      firstDate: DateTime.parse('2024-00-00'),
-      lastDate: DateTime.parse('9999-00-00'),
-    );
-
-    if (dateTime == null || !context.mounted) return;
-
-    Todos.of(context).update(todo, todo.copyWith(dateTime: dateTime));
+    final date = await pickDate(context);
+    if (date == null || !context.mounted) return;
+    Todos.of(context).update(todo, todo.copyWith(date: date));
   }
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    final dateTime = todo.dateTime;
+    final date = todo.date;
     final s = S.of(context);
 
     return MouseRegion(
@@ -197,8 +210,8 @@ class _DatePicker extends StatelessWidget {
         behavior: HitTestBehavior.opaque,
         onTap: () async => _pickDate(context),
         child: Text(
-          dateTime == null ? s.key(Lk.pickDateTime) : '${dateTime.day}.${dateTime.month}.${dateTime.year % 100}',
-          style: textTheme.labelMedium?.copyWith(color: colorScheme.secondary),
+          date == null ? s.key(Lk.pickDate) : '${date.day}.${date.month}.${date.year % 100}',
+          style: style,
         ),
       ),
     );
@@ -218,57 +231,32 @@ class _ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return ListenableBuilder(
-      listenable: mode,
-      builder: (_, __) {
-        final value = mode.value;
+    return AnimatedSize(
+      duration: AppDurations.fastSlide,
+      curve: AppCurves.slide,
+      child: ListenableBuilder(
+        listenable: mode,
+        builder: (_, __) {
+          final value = mode.value;
 
-        if (value == null) return const SizedBox.shrink();
+          if (value == null) return const SizedBox.shrink();
 
-        return switch (value) {
-          TodoCardMode.drag => ReorderableDragStartListener(
-              index: index,
-              child: const Icon(Icons.drag_handle_rounded),
-            ),
-          TodoCardMode.delete => IconButton(
-              icon: Icon(Icons.delete_outline_rounded, color: colorScheme.error),
-              onPressed: () => _onDeleteTap(context),
-              color: colorScheme.error,
-            ),
-        };
-      },
+          return switch (value) {
+            TodoCardMode.drag => ReorderableDragStartListener(
+                index: index,
+                child: const SizedBox.square(
+                  dimension: kMinInteractiveDimension,
+                  child: Icon(Icons.drag_handle_rounded),
+                ),
+              ),
+            TodoCardMode.delete => IconButton(
+                icon: Icon(Icons.delete_outline_rounded, color: colorScheme.error),
+                onPressed: () => _onDeleteTap(context),
+                color: colorScheme.error,
+              ),
+          };
+        },
+      ),
     );
-
-    // return PopupMenuButton<void>(
-    //   icon: const Icon(Icons.more_vert),
-    //   itemBuilder: (_) => <PopupMenuEntry<void>>[
-    //     PopupMenuItem(
-    //       onTap: () async => _pickDate(context),
-    //       child: Row(
-    //         children: [
-    //           const Icon(Icons.visibility_outlined),
-    //           const HSpacer(Insets.xs),
-    //           Text(
-    //             s.key(Lk.addDate),
-    //             style: textTheme.bodyMedium,
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //     PopupMenuItem(
-    //       onTap: () => _onDeleteTap(context),
-    //       child: Row(
-    //         children: [
-    //           Icon(Icons.delete_outline, color: colorScheme.error),
-    //           const HSpacer(Insets.xs),
-    //           Text(
-    //             s.key(Lk.delete),
-    //             style: textTheme.bodyMedium?.copyWith(color: colorScheme.error),
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ],
-    // );
   }
 }

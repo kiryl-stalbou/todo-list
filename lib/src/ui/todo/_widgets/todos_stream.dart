@@ -1,24 +1,25 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../constants/sizes.dart';
 import '../../../entities/todo/todo_data.dart';
+import '../../../scopes/user/dependencies/todos/todos.dart';
 import '../../_widgets/common/hide_keyboard_area.dart';
 import '../../_widgets/common/spacers.dart';
 import '../../_widgets/indicators/circular_loading_indicator.dart';
 import 'todo_card.dart';
 import 'todos_title.dart';
 
-class TodosStreamList extends StatelessWidget {
-  const TodosStreamList({
+class TodosStream extends StatelessWidget {
+  const TodosStream({
+    required this.mode,
     required this.title,
     required this.stream,
     super.key,
   });
 
   final String title;
+  final ValueNotifier<TodoCardMode?> mode;
   final ValueStream<List<TodoData>> stream;
 
   @override
@@ -43,22 +44,25 @@ class TodosStreamList extends StatelessWidget {
                 SliverReorderableList(
                   itemCount: todos.length,
                   itemBuilder: (_, index) => TodoCard(
-                    mode: ValueNotifier(TodoCardMode.delete),
-                    key: ValueKey(index),
+                    key: ValueKey(todos[index].id),
                     todo: todos[index],
                     index: index,
+                    mode: mode,
                   ),
-                  // itemBuilder: (_, index) => ReorderableDragStartListener(
-                  //   key: ValueKey(index),
-                  //   index: index,
-                  //   child: TodoCard(
-                  //     key: ValueKey(index),
-                  //     todo: todos[index],
-                  //   ),
-                  // ),
-                  onReorder: (oldIndex, newIndex) {},
+                  onReorder: (oldIndex, newIndex) {
+                    if (oldIndex < newIndex) newIndex -= 1;
+                    Todos.of(context).move(todos[oldIndex], todos[newIndex]);
+                    // Update local to prevent lag
+                    final item = todos.removeAt(oldIndex);
+                    todos.insert(newIndex, item);
+                  },
+                  proxyDecorator: (child, _, __) => ColoredBox(
+                    color: Theme.of(context).colorScheme.tertiaryContainer,
+                    child: child,
+                  ),
                 ),
 
+                // Ensures that keyboard doesnt overlap components
                 const VSpacer.sliver(300),
               ],
             ),

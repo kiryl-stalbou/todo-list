@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../scopes/user/dependencies/todos/todos.dart';
 
-class TodayTodosBadge extends StatelessWidget {
-  const TodayTodosBadge({required this.child, super.key});
+class TodayBadge extends StatelessWidget {
+  const TodayBadge({required this.child, super.key});
 
   final Widget child;
 

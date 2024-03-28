@@ -8,19 +8,21 @@ part of 'todo_data.dart';
 
 _$TodoDataImpl _$$TodoDataImplFromJson(Map<String, dynamic> json) =>
     _$TodoDataImpl(
+      id: json['id'] as String,
       title: json['title'] as String?,
       notes: json['notes'] as String?,
-      dateTime: _$JsonConverterFromJson<Timestamp, DateTime>(
-          json['dateTime'], const _TimestampSerializer().fromJson),
+      date: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['date'], const _TimestampSerializer().fromJson),
       isCompleted: json['isCompleted'] as bool,
     );
 
 Map<String, dynamic> _$$TodoDataImplToJson(_$TodoDataImpl instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'title': instance.title,
       'notes': instance.notes,
-      'dateTime': _$JsonConverterToJson<Timestamp, DateTime>(
-          instance.dateTime, const _TimestampSerializer().toJson),
+      'date': _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.date, const _TimestampSerializer().toJson),
       'isCompleted': instance.isCompleted,
     };
 

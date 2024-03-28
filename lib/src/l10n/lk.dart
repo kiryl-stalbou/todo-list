@@ -13,10 +13,8 @@ abstract final class Lk {
         _ => Lk.errorUnknown,
       };
 
-
-
   static const String all = 'all';
-  static const String pickDateTime = 'pickDateTime';
+  static const String pickDate = 'pickDate';
   static const String addTodo = 'addTodo';
   static const String title = 'title';
   static const String notes = 'notes';
@@ -34,7 +32,9 @@ abstract final class Lk {
   static const String proceed = 'proceed';
   static const String cancel = 'cancel';
   static const String require = 'require';
-  static const String delete = 'delete';
+  static const String restoreMode = 'restoreMode';
+  static const String dragMode = 'dragMode';
+  static const String deleteMode = 'deleteMode';
   static const String addDate = 'addDate';
   static const String search = 'search';
 

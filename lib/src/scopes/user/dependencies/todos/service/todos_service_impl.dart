@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../../../../entities/todo/todo_data.dart';
@@ -20,8 +21,10 @@ final class TodosServiceImpl implements TodosService {
   final _allTodosController = BehaviorSubject<List<TodoData>>();
   late final StreamSubscription<List<TodoData>> _todosSubscription;
 
+  List<TodoData> _lastKnownTodos = [];
+
   @override
-  ValueStream<List<TodoData>> get allTodosStream => _repository.todosStream;
+  ValueStream<List<TodoData>> get allTodosStream => _allTodosController.stream;
 
   @override
   ValueStream<List<TodoData>> get completedTodosStream => _completedTodosController.stream;
@@ -70,6 +73,39 @@ final class TodosServiceImpl implements TodosService {
   }
 
   @override
+  void move(TodoData from, TodoData to) {
+    final l = _l.copyWith(method: 'move', params: 'from: $from, to: $to');
+
+    final todos = _repository.todosStream.valueOrNull;
+
+    if (todos == null) {
+      l.w('Failed to move todo, last emited todos not found');
+      return;
+    }
+
+    final toIndex = todos.indexOf(to);
+
+    if (toIndex == -1) {
+      l.w('Failed to move todo, toTodo not found');
+      return;
+    }
+
+    final isRemoved = todos.remove(from);
+
+    if (!isRemoved) {
+      l.w('Failed to move todo, fromTodo todo not found');
+      return;
+    }
+
+    todos.insert(toIndex, from);
+
+    // ignore: discarded_futures
+    _update(todos);
+
+    l.v('Move was successfull');
+  }
+
+  @override
   void delete(TodoData todo) {
     final l = _l.copyWith(method: 'delete', params: 'todo: $todo');
 
@@ -94,8 +130,13 @@ final class TodosServiceImpl implements TodosService {
   }
 
   @override
-  void update(TodoData oldTodo, TodoData newTodo, int? newIndex) {
+  void update(TodoData oldTodo, TodoData newTodo) {
     final l = _l.copyWith(method: 'update', params: 'oldTodo: $oldTodo, newTodo: $newTodo');
+
+    if (oldTodo == newTodo) {
+      l.i('Todo is up to date');
+      return;
+    }
 
     final todos = _repository.todosStream.valueOrNull;
 
@@ -111,13 +152,7 @@ final class TodosServiceImpl implements TodosService {
       return;
     }
 
-    if (newIndex == null) {
-      todos[oldIndex] = newTodo;
-    } else {
-      todos
-        ..removeAt(oldIndex)
-        ..insert(newIndex, newTodo);
-    }
+    todos[oldIndex] = newTodo;
 
     // ignore: discarded_futures
     _update(todos);
@@ -125,47 +160,50 @@ final class TodosServiceImpl implements TodosService {
     l.v('Update was successfull');
   }
 
-  @override
-  void sort<T>(TodosSortComparator<T> comparator) {
-    final l = _l.copyWith(method: 'sort', params: 'comparator: $comparator');
-
-    l.v('Completed');
-  }
-
   Future<void> _update(List<TodoData> todos) async {
-    final l = _l.copyWith(method: '_updatePersistence', params: '');
+    final l = _l.copyWith(method: '_update', params: '');
     try {
+      // Dont wait for update from server
       _onTodosChanges(todos);
 
       await _repository.update(todos);
 
       l.v('Completed');
     } on TodoException catch (e, s) {
-      l.error(e, s, reason: 'Failed to update todos persistence');
+      l.error(e, s, reason: 'Failed to update todos');
       // Since firebase automatically will retry next time when user goes online
-      // we dont need to manage this scenario, so we just silence this exception
+      // we dont need to manage this scenario, so we just silence any exception
     }
   }
 
   void _onTodosChanges(List<TodoData> todos) {
     final l = _l.copyWith(method: '_onTodosChanges', params: 'todos: $todos');
 
+    if (const ListEquality<TodoData>().equals(_lastKnownTodos, todos)) {
+      l.v('Todos is up to date, nothing to update');
+      return;
+    }
+
+    _lastKnownTodos = List.of(todos);
+
+    final allTodos = <TodoData>[];
     final todayTodos = <TodoData>[];
     final completedTodos = <TodoData>[];
 
     for (final todo in todos) {
       if (todo.isCompleted) {
         completedTodos.add(todo);
-      } else if (_isToday(todo.dateTime)) {
-        todayTodos.add(todo);
+      } else {
+        if (_isToday(todo.date)) todayTodos.add(todo);
+        allTodos.add(todo);
       }
     }
 
-    _allTodosController.add(todos);
+    _allTodosController.add(allTodos);
     _todayTodosController.add(todayTodos);
     _completedTodosController.add(completedTodos);
 
-    l.v('Completed with today: $todayTodos, completed: $completedTodos');
+    l.v('Completed with all: $allTodos today: $todayTodos, completed: $completedTodos');
   }
 }
 

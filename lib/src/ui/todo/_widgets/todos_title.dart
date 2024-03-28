@@ -15,7 +15,7 @@ class TodosTitle extends StatelessWidget {
       child: AppPadding(
         child: Text(
           data,
-          style: textTheme.headlineMedium,
+          style: textTheme.headlineSmall,
         ),
       ),
     );

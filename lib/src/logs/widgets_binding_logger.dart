@@ -31,12 +31,12 @@ final class WidgetsBindingLogger with WidgetsBindingObserver {
     return didPush;
   }
 
-  @override
-  void didChangeMetrics() {
-    _l.copyWith(method: 'didChangeMetrics', params: '');
+  // @override
+  // void didChangeMetrics() {
+  //   _l.copyWith(method: 'didChangeMetrics', params: '');
 
-    super.didChangeMetrics();
-  }
+  //   super.didChangeMetrics();
+  // }
 
   @override
   void didChangeTextScaleFactor() {
