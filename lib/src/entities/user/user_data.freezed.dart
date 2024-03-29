@@ -20,7 +20,7 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserData {
-  String get username => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
 
@@ -31,14 +31,14 @@ mixin _$UserData {
 @JsonSerializable()
 class _$UserDataImpl extends _UserData {
   const _$UserDataImpl(
-      {required this.username, required this.email, required this.id})
+      {required this.name, required this.email, required this.id})
       : super._();
 
   factory _$UserDataImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserDataImplFromJson(json);
 
   @override
-  final String username;
+  final String name;
   @override
   final String email;
   @override
@@ -46,7 +46,7 @@ class _$UserDataImpl extends _UserData {
 
   @override
   String toString() {
-    return 'UserData(username: $username, email: $email, id: $id)';
+    return 'UserData(name: $name, email: $email, id: $id)';
   }
 
   @override
@@ -54,15 +54,14 @@ class _$UserDataImpl extends _UserData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserDataImpl &&
-            (identical(other.username, username) ||
-                other.username == username) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.id, id) || other.id == id));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, username, email, id);
+  int get hashCode => Object.hash(runtimeType, name, email, id);
 
   @override
   Map<String, dynamic> toJson() {
@@ -74,7 +73,7 @@ class _$UserDataImpl extends _UserData {
 
 abstract class _UserData extends UserData {
   const factory _UserData(
-      {required final String username,
+      {required final String name,
       required final String email,
       required final String id}) = _$UserDataImpl;
   const _UserData._() : super._();
@@ -83,7 +82,7 @@ abstract class _UserData extends UserData {
       _$UserDataImpl.fromJson;
 
   @override
-  String get username;
+  String get name;
   @override
   String get email;
   @override

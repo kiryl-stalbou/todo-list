@@ -7,7 +7,7 @@ part 'user_data.freezed.dart';
 @Freezed(fromJson: true, toJson: true)
 class UserData with _$UserData {
   const factory UserData({
-    required String username,
+    required String name,
     required String email,
     required String id,
   }) = _UserData;
