@@ -63,6 +63,8 @@ class _WebSignUpScreenState extends State<WebSignUpScreen> with SignUpController
                   child: _SignUpButton(onSignUpTap),
                 ),
               ),
+
+              const VSpacer.sliver(Insets.web),
             ],
           ),
         ),

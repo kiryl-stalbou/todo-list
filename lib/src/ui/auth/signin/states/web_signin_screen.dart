@@ -62,6 +62,8 @@ class _WebSignInScreenState extends State<WebSignInScreen> with SignInController
                   child: _SignInButton(onSignInTap),
                 ),
               ),
+
+              const VSpacer.sliver(Insets.web),
             ],
           ),
         ),

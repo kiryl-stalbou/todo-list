@@ -24,6 +24,10 @@ abstract final class Insets {
 
   /// 40
   static const double xxxl = 40;
+
+  /// 300
+  /// Ensures that keyboard doesnt overlap components
+  static const double web = 300;
 }
 
 abstract final class IconSize {

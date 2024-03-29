@@ -62,8 +62,7 @@ class TodosStream extends StatelessWidget {
                   ),
                 ),
 
-                // Ensures that keyboard doesnt overlap components
-                const VSpacer.sliver(300),
+                const VSpacer.sliver(Insets.web),
               ],
             ),
           );

@@ -21,7 +21,7 @@ class UserInfo extends StatelessWidget {
         children: [
           //
           Text(
-            '${s.key(Lk.name)}: ${user.username}',
+            '${s.key(Lk.name)}: ${user.name}',
             style: textTheme.titleSmall,
           ),
 
