@@ -48,7 +48,7 @@ class _MobileSignUpScreenState extends State<MobileSignUpScreen> with SignUpCont
 
               const VSpacer(Insets.xl),
 
-              SignInButton(onSignInTap),
+              Center(child: SignInButton(onSignInTap)),
             ],
           ),
         ),
