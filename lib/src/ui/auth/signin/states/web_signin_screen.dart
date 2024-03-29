@@ -63,7 +63,7 @@ class _WebSignInScreenState extends State<WebSignInScreen> with SignInController
                 ),
               ),
 
-              const VSpacer.sliver(Insets.web),
+              const VSpacer(Insets.web),
             ],
           ),
         ),
