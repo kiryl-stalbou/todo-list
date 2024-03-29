@@ -13,7 +13,7 @@ import 'src/logs/widgets_binding_logger.dart';
 import 'src/utils/common/path_url_strategy.dart';
 
 // dart run build_runner build --delete-conflicting-outputs
-// flutter build web --web-renderer canvaskit
+// flutter build web --web-renderer canvaskit --release
 // firebase deploy --only hosting
 // https://todo-app-krainet.web.app
 

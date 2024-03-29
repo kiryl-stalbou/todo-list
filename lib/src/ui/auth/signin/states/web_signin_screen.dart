@@ -6,12 +6,12 @@ import '../../../../l10n/s.dart';
 import '../../../../utils/common/desktop_constraints.dart';
 import '../../../../utils/mixins/localization_state_mixin.dart';
 import '../../../../utils/mixins/theme_state_mixin.dart';
-import '../../../_widgets/appbars/static_appbar.dart';
+import '../../../_widgets/appbars/scroll_aware_appbar.dart';
 import '../../../_widgets/common/hide_keyboard_area.dart';
 import '../../../_widgets/common/paddings.dart';
 import '../../../_widgets/common/spacers.dart';
 import '../../../_widgets/interactive/app_button.dart';
-import '../../../_widgets/scaffolds/app_scaffold.dart';
+import '../../../_widgets/scaffolds/scroll_aware_scaffold.dart';
 import '../_widgets/signin_form.dart';
 import '../_widgets/signin_title.dart';
 import '../_widgets/signup_button.dart';
@@ -26,8 +26,11 @@ class WebSignInScreen extends StatefulWidget {
 
 class _WebSignInScreenState extends State<WebSignInScreen> with SignInControllerMixin, LocalizationStateMixin, ThemeStateMixin {
   @override
-  Widget build(BuildContext context) => AppScaffold(
-        top: const StaticAppBar(),
+  Widget build(BuildContext context) => ScrollAwareScaffold(
+        top: ScrollAwareAppBar(
+          title: Text(s.key(Lk.signup)),
+          showTitleScrollExtent: 70,
+        ),
         body: HideKeyboardArea(
           child: ListView(
             children: [
