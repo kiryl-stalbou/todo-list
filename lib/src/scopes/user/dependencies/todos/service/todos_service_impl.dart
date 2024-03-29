@@ -179,7 +179,9 @@ final class TodosServiceImpl implements TodosService {
   void _onTodosChanges(List<TodoData> todos) {
     final l = _l.copyWith(method: '_onTodosChanges', params: 'todos: $todos');
 
-    if (const ListEquality<TodoData>().equals(_lastKnownTodos, todos)) {
+    // If todos is empty we need to pass it further, 
+    // to differenciate loading state and absence of data 
+    if (todos.isNotEmpty && _listEquals(_lastKnownTodos, todos)) {
       l.v('Todos is up to date, nothing to update');
       return;
     }
@@ -214,3 +216,5 @@ bool _isToday(DateTime? date) {
   final shortDate = DateTime(date.year, date.month, date.day);
   return shortDate.isAtSameMomentAs(today);
 }
+
+bool Function(List<TodoData>?, List<TodoData>?) _listEquals = ListEquality<TodoData>().equals;
