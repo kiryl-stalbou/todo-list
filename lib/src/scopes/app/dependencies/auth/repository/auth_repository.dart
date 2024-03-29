@@ -5,7 +5,7 @@ import '../../../../../entities/user/user_data.dart';
 abstract interface class AuthRepository {
   ValueStream<UserData?> get authStateChanges;
 
-  void dispose();
+  Future<void> dispose();
 
   Future<void> init();
 

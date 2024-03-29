@@ -217,4 +217,4 @@ bool _isToday(DateTime? date) {
   return shortDate.isAtSameMomentAs(today);
 }
 
-bool Function(List<TodoData>?, List<TodoData>?) _listEquals = ListEquality<TodoData>().equals;
+bool Function(List<TodoData>?, List<TodoData>?) _listEquals = const ListEquality<TodoData>().equals;

@@ -30,13 +30,11 @@ final class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  void dispose() {
+  Future<void> dispose() async {
     final l = _l.copyWith(method: 'dispose', params: '');
 
-    // ignore: discarded_futures
-    _firAuthStateChangesSubscription.cancel();
-    // ignore: discarded_futures
-    _authStateChanges.close();
+    await _firAuthStateChangesSubscription.cancel();
+    await _authStateChanges.close();
 
     l.v('Completed');
   }
@@ -121,7 +119,7 @@ final class AuthRepositoryImpl implements AuthRepository {
 
       l.i('User is Successfully Signed In');
 
-      final user = UserData(username: username, email: email, id: id);
+      final user = UserData(name: username, email: email, id: id);
 
       _authStateChanges.add(user);
 

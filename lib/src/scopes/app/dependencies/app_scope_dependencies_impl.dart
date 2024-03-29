@@ -45,7 +45,9 @@ final class AppScopeDependenciesImpl implements AppScopeDependencies {
     } on AppException catch (e, s) {
       l.error(e, s, reason: 'Initialization Failed');
 
+      // ignore: unawaited_futures
       authService?.dispose();
+      // ignore: unawaited_futures
       authRepository?.dispose();
 
       await stopInitWatch(AppDurations.minAppScopeInitDelay, watch, l);
@@ -58,6 +60,7 @@ final class AppScopeDependenciesImpl implements AppScopeDependencies {
   void dispose() {
     final l = _l.copyWith(method: 'dispose', params: '');
 
+    // ignore: discarded_futures
     authService.dispose();
 
     l.v('Completed');

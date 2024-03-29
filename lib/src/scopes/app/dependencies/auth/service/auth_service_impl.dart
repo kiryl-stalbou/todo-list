@@ -16,10 +16,10 @@ class AuthServiceImpl implements AuthService {
   ValueStream<UserData?> get authStateChanges => _repository.authStateChanges;
 
   @override
-  void dispose() {
+  Future<void> dispose() async {
     final l = _l.copyWith(method: 'dispose', params: '');
 
-    _repository.dispose();
+    await _repository.dispose();
 
     l.v('Completed');
   }
