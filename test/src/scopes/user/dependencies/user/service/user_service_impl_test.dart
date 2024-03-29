@@ -8,7 +8,7 @@ void main() {
 
   group('UserServiceImpl, getter', () {
     setUp(() {
-      testUser = const UserData(username: 'test', email: 'test@gmail.com', id: '1');
+      testUser = const UserData(name: 'test', email: 'test@gmail.com', id: '1');
       userServiceImpl = UserServiceImpl(testUser);
     });
 
