@@ -2,7 +2,7 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_classes_with_only_static_members
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
-    show TargetPlatform, defaultTargetPlatform, kIsWeb;
+    show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -48,17 +48,17 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyAuzb1CD-yasoFrEF7MqCF1Hyz3OJ3tWqg',
-    appId: '1:720112025543:web:8759d69468cfff8116a3e2',
+    appId: '1:720112025543:web:bf280bd2b92ba39716a3e2',
     messagingSenderId: '720112025543',
     projectId: 'todo-app-krainet',
     authDomain: 'todo-app-krainet.firebaseapp.com',
     storageBucket: 'todo-app-krainet.appspot.com',
-    measurementId: 'G-PH07NG72NK',
+    measurementId: 'G-V1RZMPNHL0',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyA3tkwSt49hh4QDVsMxoiMAZ09jtLTBs6A',
-    appId: '1:720112025543:android:ee1f2f2db04de79016a3e2',
+    appId: '1:720112025543:android:d9aa4ea721e937ba16a3e2',
     messagingSenderId: '720112025543',
     projectId: 'todo-app-krainet',
     storageBucket: 'todo-app-krainet.appspot.com',
@@ -66,10 +66,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCr9x-mygEW0RJQY8tN3txRlTqvDl5A4-4',
-    appId: '1:720112025543:ios:749c6b99704b5aef16a3e2',
+    appId: '1:720112025543:ios:29d709a8fff9a72816a3e2',
     messagingSenderId: '720112025543',
     projectId: 'todo-app-krainet',
     storageBucket: 'todo-app-krainet.appspot.com',
-    iosBundleId: 'com.example.todoAppKrainet',
+    iosBundleId: 'com.krainet.todo',
   );
 }
