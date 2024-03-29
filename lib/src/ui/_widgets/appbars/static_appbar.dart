@@ -82,9 +82,13 @@ class _ToggleThemeButton extends StatelessWidget {
   const _ToggleThemeButton();
 
   @override
-  Widget build(BuildContext context) => IconButton(
-        tooltip: S.of(context).key(Lk.toggleTheme),
-        onPressed: () => TodoTheme.toggle(context),
-        icon: const Icon(CupertinoIcons.moon_circle),
-      );
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return IconButton(
+      tooltip: S.of(context).key(Lk.toggleTheme),
+      onPressed: () => TodoTheme.toggle(context),
+      icon: Icon(isDark ? Icons.sunny : CupertinoIcons.moon_fill),
+    );
+  }
 }

@@ -179,8 +179,8 @@ final class TodosServiceImpl implements TodosService {
   void _onTodosChanges(List<TodoData> todos) {
     final l = _l.copyWith(method: '_onTodosChanges', params: 'todos: $todos');
 
-    // If todos is empty we need to pass it further, 
-    // to differenciate loading state and absence of data 
+    // If todos is empty we need to pass it further,
+    // to differenciate loading state and absence of data
     if (todos.isNotEmpty && _listEquals(_lastKnownTodos, todos)) {
       l.v('Todos is up to date, nothing to update');
       return;
