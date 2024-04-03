@@ -18,7 +18,7 @@ Linked in: https://www.linkedin.com/in/kirill-stolbov-91375b252?utm_source=share
 
 ![IMAGE 2024-04-03 15:24:26](https://github.com/KirillStolbov/todo_app_krainet/assets/116667638/b03a8188-a95c-4d94-8b73-c6a033c35746)
 
-![IMAGE 2024-04-03 15:24:33](https://github.com/KirillStolbov/todo_app_krainet/assets/116667638/fc02b27f-fd6b-45a2-a5f7-c08e66765019
+![IMAGE 2024-04-03 15:24:33](https://github.com/KirillStolbov/todo_app_krainet/assets/116667638/fc02b27f-fd6b-45a2-a5f7-c08e66765019)
 
 ![IMAGE 2024-04-03 15:24:59](https://github.com/KirillStolbov/todo_app_krainet/assets/116667638/d94e5a4e-eb3f-4943-94d8-adc364346ba7)
 
